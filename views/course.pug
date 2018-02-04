@@ -1,0 +1,69 @@
+html
+  body
+    style.
+        body { 
+            background: url("http://www.theedadvocate.org/wp-content/uploads/2017/11/Oregon.jpg") no-repeat center center fixed; 
+            background-size: cover;
+            height: 100%;
+            }
+        .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        grid-gap: 50px;
+        object-fit: cover;
+        padding: 10px;
+        }
+        .grid-item {
+        background-color: wheat;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        font-size: 20px;
+        text-align: center;
+        }
+        .grid-item1 {
+        background-color: rgba(201, 155, 187, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        font-size: 30px;
+        text-align: center;
+        }
+    #hello
+    input#dept(type='hidden', value=depId)
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+    script(src='https://unpkg.com/sweetalert/dist/sweetalert.min.js')
+    script.
+        var depId= document.getElementById("dept").value;
+        class CourseComponent extends React.Component {
+        constructor(props) {
+        super(props);
+        this.state = Object.assign({}, { courses: props.courses });
+        }
+        componentDidMount() {
+        fetch('../crs?depId=' + depId)
+        .then(res => res.json())
+        .then(courses => this.setState({ courses: courses }));
+        }
+        render() {
+        if (this.state.courses) {
+        const numbers = this.state.courses;
+        return (
+        React.createElement("div", { className: 'container' },
+        React.createElement("div", { className: 'grid-container' },
+        this.state.courses.map((number) => {
+        return React.createElement("a", { key: number.crsNr, className: 'grid-item', href: '../review?crsId=' + depId+number.crsNr }, number.crsNr + " - " + number.crsNme)
+        })
+        )
+        )
+        )
+        }
+        }
+        }
+        const courses = []
+        ReactDOM.render(
+        React.createElement(CourseComponent, { courses: courses }),
+        document.getElementById("hello")
+        );

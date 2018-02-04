@@ -1,0 +1,88 @@
+<html>
+<header>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+</header>
+
+<body>
+    <div class="page-header container">
+        <h1>Welcome to Juno RYC
+            <small>
+                <span style="color:orange">Oregon State University</span>
+            </small>
+        </h1>
+    </div>
+    <div class="jumbotron container">
+        <form id="formfield" class="form-horizontal" method="post">
+
+            <div class="form-group">
+                <label>Last Name</label>
+                <input class="form-control" placeholder="Enter Last Name" name="lastname" id="lastname">
+            </div>
+
+            <div class="form-group">
+                <label>First Name</label>
+                <input class="form-control" placeholder="Enter First Name" name="firstname" id="firstname">
+            </div>
+            <div class="form-group">
+                <input type="button" name="delete" value="Delete" id="deleteBtn" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger"
+                />
+                <input type="button" name="swal" value="swal" id="swalBtn" class="btn btn-primary" />
+                <input type="button" name="reset" value="Reset" onclick="window.location='./'" class="btn btn-default" data-modal-type="confirm"
+                />
+                <input type="hidden" name="toDelete" value='false' id="toDelete">
+            </div>
+        </form>
+
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Confirm Delete
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the following details?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="#" id="submitModal" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $('#deleteBtn').click(function () {
+        $('#lname').text($('#lastname').val());
+        $('#fname').text($('#firstname').val());
+    });
+    $('#swalBtn').click(function () {
+        //swal('Hello');
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $('#toDelete').attr('value', 'true')
+                    $('#formfield').submit();
+                } else {
+                    //swal.close();
+                    return false;
+                }
+            });
+    });
+    $('#submitModal').click(function () {
+        $('#toDelete').attr('value', 'true')
+        $('#formfield').submit();
+    });
+</script>
+
+
+</html>
