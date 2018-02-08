@@ -2,7 +2,7 @@ html
   body
     style.
         body { 
-            background: url("http://www.theedadvocate.org/wp-content/uploads/2017/11/Oregon.jpg") no-repeat center center fixed; 
+            background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
             background-size: cover;
             height: 100%;
             }
@@ -14,11 +14,17 @@ html
         padding: 10px;
         }
         .grid-item {
-        background-color: wheat;
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        //background-color: wheat;
+
+        //border: 1px solid rgba(255, 255, 255, 0.8);
         padding: 10px;
         font-size: 20px;
         text-align: center;
+        color:ivory;
+        }
+        .grid-container>a:hover {
+            color: darkcyan;
+            text-decoration: none;
         }
         .grid-item1 {
         background-color: rgba(201, 155, 187, 0.8);
@@ -54,7 +60,7 @@ html
         React.createElement("div", { className: 'container' },
         React.createElement("div", { className: 'grid-container' },
         this.state.courses.map((number) => {
-        return React.createElement("a", { key: number.crsNr, className: 'grid-item', href: '../review?crsId=' + depId+number.crsNr }, number.crsNr + " - " + number.crsNme)
+        return React.createElement("a", { key: number.crsNr, className: 'grid-item', href: '../review?crsId=' + depId+number.crsNr+'&depId='+depId }, number.crsNr + " - " + number.crsNme)
         })
         )
         )

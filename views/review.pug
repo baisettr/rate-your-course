@@ -2,68 +2,240 @@ html
     header
     style.
         body { 
-            background: url("https://s-i.huffpost.com/gen/2603146/images/o-JOURNAL-WRITING-facebook.jpg") no-repeat center center fixed; 
+            background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
             background-size: cover;
             height: 100%;   
             }
+        .txt-center {
+            text-align: center;
+            }
+            .hide {
+            display: none;
+            }
+            .clear {
+            float: none;
+            clear: both;
+            }
+            .rating {
+            width: 160px;
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            text-align: center;
+            position: relative;
+            }
+            .rating>label {
+            float: right;
+            display: inline;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            width: 1.1em;
+            cursor: pointer;
+            color: #000;
+            }
+            .rating>label:hover,
+            .rating>label:hover~label,
+            .rating>input.radio-btn:checked~label {
+            color: transparent;
+            }
+            .rating>label:hover:before,
+            .rating>label:hover~label:before,
+            .rating>input.radio-btn:checked~label:before,
+            .rating>input.radio-btn:checked~label:before {
+            content: "\2605";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            }
+            .text-display {
+              color: orange;
+              padding:10px;
+            }
+            .star-display {
+              content: "\2605";
+              color: brown;
+              padding:10px;
+            }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
+            grid-gap: 50px;
+            object-fit: cover;
+            padding: 10px;
+        }
+        a {
+            color: #080808;
+            text-decoration: none;
+        }
+        a:hover {
+            color: white;
+        }
+
+        .grid-item {
+            background-color: wheat;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .grid-item1 {
+            background-color: rgba(201, 155, 187, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            font-size: 30px;
+            text-align: center;
+        }
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
     script(src='https://unpkg.com/sweetalert/dist/sweetalert.min.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js")
     body
-    .page-header.container
-      h1
-        | Welcome to Juno RYC
-        small
-          span(style='color:orange') Oregon State University
-    .jumbotron.container
-      form#formfield.form-horizontal(method='post')
-        .form-group
-          label Last Name
-          input#lastname.form-control(placeholder='Enter Last Name', name='lastname')
-        .form-group
-          label First Name
-          input#firstname.form-control(placeholder='Enter First Name', name='firstname')
-        .form-group
-          input#deleteBtn.btn.btn-danger(type='button', name='delete', value='Delete', data-toggle='modal', data-target='#confirm-delete')
-          input#swalBtn.btn.btn-primary(type='button', name='swal', value='swal')
-          input.btn.btn-default(type='button', name='reset', value='Reset', onclick="window.location='./'", data-modal-type='confirm')
-          input#toDelete(type='hidden', name='toDelete', value='false')
-      #confirm-delete.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-        .modal-dialog.modal-dialog-centered
-          .modal-content
-            .modal-header
-              | Confirm Delete
-            .modal-body
-              | Are you sure you want to delete the following details?
-            .modal-footer
-              button.btn.btn-default(type='button', data-dismiss='modal') Cancel
-              a#submitModal.btn.btn-danger(href='#') Delete
+      .page-header.container
+        h1
+          | Welcome to Juno RYC
+          small
+            span(style='color:orange') Oregon State University
+        a.backToLink(href="../course?depId="+depId, style='color: white;', id='backTo.link') «Back to Courses
+      .jumbotron.container
+        input(type='hidden',name='crsId',id='courseId', value=crsId)
+        h2 CS 160
+        h4 Overall Rating
+        br
+        input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
+        #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+          .modal-dialog.modal-dialog-centered
+            .modal-content
+              .modal-header
+                | Leave a Review
+              .modal-body
+                form#formfield.form-horizontal(method='post')
+                  input(type='hidden',name='crsId',id='courseId', value=crsId)
+                  .form-group
+                    label Things which you liked about the course
+                    input#lastname.form-control(placeholder='Enter pros about this course', name='pros',required)
+                  .form-group
+                    label Drawbacks
+                    input#firstname.form-control(placeholder='Enter cons', name='cons',required)
+                  .form-group
+                    label Useful links or Subject Stuff
+                    input#firstname.form-control(placeholder='Enter cons', name='extra',required)
+                  .form-group
+                    label Feedback or Suggestions to Improve
+                    input#firstname.form-control(placeholder='Enter here', name='feedback',required)
+                  .form-group
+                    label Overall Rating
+                  .form-group
+                    .rating.h3
+                      input#star5.radio-btn.hide(name='star', type='radio', value='5')
+                      label(for='star5') ☆
+                      input#star4.radio-btn.hide(name='star', type='radio', value='4')
+                      label(for='star4') ☆
+                      input#star3.radio-btn.hide(name='star', type='radio', value='3')
+                      label(for='star3') ☆
+                      input#star2.radio-btn.hide(name='star', type='radio', value='2')
+                      label(for='star2') ☆
+                      input#star1.radio-btn.hide(name='star', type='radio', value='1')
+                      label(for='star1') ☆
+                      .clear
+                  .form-group
+                    .row
+                      .col-sm-2
+                        button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+                      .col-sm-2
+                        input#deleteBtn.btn.btn-success(type='submit', name='save', value='Post')
+
+    #hello
     script.
-        $('#deleteBtn').click(function () {
-        $('#lname').text($('#lastname').val());
-        $('#fname').text($('#firstname').val());
-        });
-        $('#swalBtn').click(function () {
-        //swal('Hello');
-        swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-        })
-        .then((willDelete) => {
-        if (willDelete) {
-        $('#toDelete').attr('value', 'true')
-        $('#formfield').submit();
-        } else {
-        //swal.close();
-        return false;
-        }
-        });
-        });
-        $('#submitModal').click(function () {
-        $('#toDelete').attr('value', 'true')
-        $('#formfield').submit();
-        });
+      class CourseComponent extends React.Component {
+      constructor(props) {
+      super(props)
+      this.state = Object.assign({}, { reviews: props.reviews });
+      }
+      componentDidMount() {
+      var crsId = document.getElementById('courseId').value;
+      fetch('../reviews?crsId='+crsId)
+      .then(res => res.json())
+      .then(reviews => this.setState({ reviews: reviews }));
+      }
+      render() {
+      if (this.state.reviews) {
+      const numbers = this.state.reviews;
+      return (
+      React.createElement("div", { className: 'container' },
+      React.createElement("div", { className: 'grid-container' },
+      this.state.reviews.map((number) => {
+        var stars = [];
+        var rating = number.rating;
+        var i =0;
+        while (i<rating){stars.push('☆');i++;};
+      return React.createElement("div", { key: number._id, className: 'grid-item' }, 
+                React.createElement("label",{},"Positives"),
+                React.createElement("text",{className:'text-display'},number.pros),
+                React.createElement("br",{}),
+                React.createElement("label",{},"Negatives"),
+                React.createElement("text",{className:'text-display'},number.cons),
+                React.createElement("br",{}),
+                React.createElement("label",{},"Useful Stuff"),
+                React.createElement("text",{className:'text-display'},number.stuff),
+                React.createElement("br",{}), 
+                React.createElement("label",{},"Rating"),
+                React.createElement("text",{className:'star-display'},stars),
+              )
+      })
+      )
+      )
+      )
+      }
+      }
+      }
+      const reviews = []
+      ReactDOM.render(
+      React.createElement(CourseComponent, { reviews: reviews }),
+      document.getElementById("hello")
+      );
+
+    script.
+      $('#deleteBtn').click(function () {
+      $('#lname').text($('#lastname').val());
+      $('#fname').text($('#firstname').val());
+      });
+      $('#swalBtn').click(function () {
+      //swal('Hello');
+      swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+      })
+      .then((willDelete) => {
+      if (willDelete) {
+      $('#toDelete').attr('value', 'true')
+      $('#formfield').submit();
+      } else {
+      //swal.close();
+      return false;
+      }
+      });
+      });
+      $('#submitModal').click(function () {
+      $('#toDelete').attr('value', 'true')
+      $('#formfield').submit();
+      });
+      $(document).ready(function () {
+      // Check Radio-box
+      $(".rating input:radio").attr("checked", false);
+      $('.rating input').click(function () {
+      $(".rating span").removeClass('checked');
+      $(this).parent().addClass('checked');
+      });
+      $('input:radio').change(
+      function () {
+      var userRating = this.value;
+      //alert(userRating);
+      });
+      });

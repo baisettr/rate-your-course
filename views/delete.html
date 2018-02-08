@@ -5,6 +5,55 @@
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
     <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
 </header>
+<style>
+    .txt-center {
+        text-align: center;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .clear {
+        float: none;
+        clear: both;
+    }
+
+    .rating {
+        width: 160px;
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        text-align: center;
+        position: relative;
+    }
+
+    .rating>label {
+        float: right;
+        display: inline;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        width: 1.1em;
+        cursor: pointer;
+        color: #000;
+    }
+
+    .rating>label:hover,
+    .rating>label:hover~label,
+    .rating>input.radio-btn:checked~label {
+        color: transparent;
+    }
+
+    .rating>label:hover:before,
+    .rating>label:hover~label:before,
+    .rating>input.radio-btn:checked~label:before,
+    .rating>input.radio-btn:checked~label:before {
+        content: "\2605";
+        position: absolute;
+        left: 0;
+        color: #FFD700;
+    }
+</style>
 
 <body>
     <div class="page-header container">
@@ -18,21 +67,36 @@
         <form id="formfield" class="form-horizontal" method="post">
 
             <div class="form-group">
-                <label>Last Name</label>
-                <input class="form-control" placeholder="Enter Last Name" name="lastname" id="lastname">
+                <label>Things which you liked about the course</label>
+                <input class="form-control" placeholder="Enter pros about this course" name="lastname" id="lastname">
             </div>
 
             <div class="form-group">
-                <label>First Name</label>
-                <input class="form-control" placeholder="Enter First Name" name="firstname" id="firstname">
+                <label>Drawbacks</label>
+                <input class="form-control" placeholder="Enter cons" name="firstname" id="firstname">
             </div>
             <div class="form-group">
-                <input type="button" name="delete" value="Delete" id="deleteBtn" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger"
-                />
-                <input type="button" name="swal" value="swal" id="swalBtn" class="btn btn-primary" />
-                <input type="button" name="reset" value="Reset" onclick="window.location='./'" class="btn btn-default" data-modal-type="confirm"
-                />
-                <input type="hidden" name="toDelete" value='false' id="toDelete">
+                <label>Other feedback</label>
+                <input class="form-control" placeholder="Enter here" name="firstname" id="firstname">
+            </div>
+            <div class="form-group">
+                <label>Overall Rating</label>
+                <input class="form-control" placeholder="Enter here" name="firstname" id="firstname">
+            </div>
+            <div class="txt-center">Overall Rating
+                <div class="rating h3">
+                    <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+                    <label for="star5">☆</label>
+                    <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+                    <label for="star4">☆</label>
+                    <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+                    <label for="star3">☆</label>
+                    <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+                    <label for="star2">☆</label>
+                    <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+                    <label for="star1">☆</label>
+                    <div class="clear"></div>
+                </div>
             </div>
         </form>
 
@@ -82,7 +146,21 @@
         $('#toDelete').attr('value', 'true')
         $('#formfield').submit();
     });
-</script>
+    $(document).ready(function () {
+        // Check Radio-box
+        $(".rating input:radio").attr("checked", false);
 
+        $('.rating input').click(function () {
+            $(".rating span").removeClass('checked');
+            $(this).parent().addClass('checked');
+        });
+
+        $('input:radio').change(
+            function () {
+                var userRating = this.value;
+                //alert(userRating);
+            });
+    });
+</script>
 
 </html>
