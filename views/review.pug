@@ -2,60 +2,60 @@ html
     header
     style.
         body { 
-            background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
-            background-size: cover;
-            height: 100%;   
-            }
+        //background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
+        background-size: cover;
+        height: 100%;   
+        }
         .txt-center {
-            text-align: center;
-            }
-            .hide {
-            display: none;
-            }
-            .clear {
-            float: none;
-            clear: both;
-            }
-            .rating {
-            width: 160px;
-            unicode-bidi: bidi-override;
-            direction: rtl;
-            text-align: center;
-            position: relative;
-            }
-            .rating>label {
-            float: right;
-            display: inline;
-            padding: 0;
-            margin: 0;
-            position: relative;
-            width: 1.1em;
-            cursor: pointer;
-            color: #000;
-            }
-            .rating>label:hover,
-            .rating>label:hover~label,
-            .rating>input.radio-btn:checked~label {
-            color: transparent;
-            }
-            .rating>label:hover:before,
-            .rating>label:hover~label:before,
-            .rating>input.radio-btn:checked~label:before,
-            .rating>input.radio-btn:checked~label:before {
-            content: "\2605";
-            position: absolute;
-            left: 0;
-            color: #FFD700;
-            }
-            .text-display {
-              color: orange;
-              padding:10px;
-            }
-            .star-display {
-              content: "\2605";
-              color: brown;
-              padding:10px;
-            }
+        text-align: center;
+        }
+        .hide {
+        display: none;
+        }
+        .clear {
+        float: none;
+        clear: both;
+        }
+        .rating {
+        width: 160px;
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        text-align: center;
+        position: relative;
+        }
+        .rating>label {
+        float: right;
+        display: inline;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        width: 1.1em;
+        cursor: pointer;
+        color: #000;
+        }
+        .rating>label:hover,
+        .rating>label:hover~label,
+        .rating>input.radio-btn:checked~label {
+        color: transparent;
+        }
+        .rating>label:hover:before,
+        .rating>label:hover~label:before,
+        .rating>input.radio-btn:checked~label:before,
+        .rating>input.radio-btn:checked~label:before {
+        content: "\2605";
+        position: absolute;
+        left: 0;
+        color: #FFD700;
+        }
+        .text-display {
+          color: orange;
+          //padding:20px;
+        }
+        .star-display {
+          content: "\2605";
+          color: brown;
+          padding:10px;
+        }
         
         .grid-container {
             display: grid;
@@ -77,7 +77,6 @@ html
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 10px;
             font-size: 20px;
-            text-align: center;
         }
 
         .grid-item1 {
@@ -87,6 +86,17 @@ html
             font-size: 30px;
             text-align: center;
         }
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 15px;
+        }
+        th,td {
+            text-align: left;
+            padding: 5px;
+            //padding-bottom: 8px;
+            //border-bottom: 1px solid rgb(99, 96, 96);
+        }
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
@@ -94,41 +104,40 @@ html
     script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js")
     body
+      <div style="background-image: url(https://wallpapercave.com/wp/liSX9D5.jpg); height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;"> 
       .page-header.container
-        h1
-          | Welcome to Juno RYC
-          small
-            span(style='color:orange') Oregon State University
+        h2(style='color:orange;text-align:center;') Oregon State University
         a.backToLink(href="../course?depId="+depId, style='color: white;', id='backTo.link') «Back to Courses
+      </div>
+      br
+      br
       .jumbotron.container
         input(type='hidden',name='crsId',id='courseId', value=crsId)
-        h2 CS 160
+        h2 #{crsId}
         h4 Overall Rating
         br
         input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
         #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
           .modal-dialog.modal-dialog-centered
             .modal-content
-              .modal-header
-                | Leave a Review
+              .modal-header.h4 Leave a Review
               .modal-body
                 form#formfield.form-horizontal(method='post')
                   input(type='hidden',name='crsId',id='courseId', value=crsId)
                   .form-group
                     label Things which you liked about the course
-                    input#lastname.form-control(placeholder='Enter pros about this course', name='pros',required)
+                    textarea#lastname.form-control(placeholder='Enter pros about this course', name='pros',rows='2',maxlength='500',required)
                   .form-group
                     label Drawbacks
-                    input#firstname.form-control(placeholder='Enter cons', name='cons',required)
+                    textarea#firstname.form-control(placeholder='Enter cons', name='cons',rows='1',maxlength='500',required)
                   .form-group
                     label Useful links or Subject Stuff
-                    input#firstname.form-control(placeholder='Enter cons', name='extra',required)
+                    textarea#firstname.form-control(placeholder='Enter cons', name='extra',rows='1',maxlength='500',required)
                   .form-group
                     label Feedback or Suggestions to Improve
-                    input#firstname.form-control(placeholder='Enter here', name='feedback',required)
+                    textarea#firstname.form-control(placeholder='Enter here', name='feedback',rows='1',maxlength='500',required)
                   .form-group
                     label Overall Rating
-                  .form-group
                     .rating.h3
                       input#star5.radio-btn.hide(name='star', type='radio', value='5')
                       label(for='star5') ☆
@@ -151,51 +160,117 @@ html
     #hello
     script.
       class CourseComponent extends React.Component {
-      constructor(props) {
-      super(props)
-      this.state = Object.assign({}, { reviews: props.reviews });
-      }
-      componentDidMount() {
-      var crsId = document.getElementById('courseId').value;
-      fetch('../reviews?crsId='+crsId)
-      .then(res => res.json())
-      .then(reviews => this.setState({ reviews: reviews }));
-      }
-      render() {
-      if (this.state.reviews) {
-      const numbers = this.state.reviews;
-      return (
-      React.createElement("div", { className: 'container' },
-      React.createElement("div", { className: 'grid-container' },
-      this.state.reviews.map((number) => {
-        var stars = [];
-        var rating = number.rating;
-        var i =0;
-        while (i<rating){stars.push('☆');i++;};
-      return React.createElement("div", { key: number._id, className: 'grid-item' }, 
-                React.createElement("label",{},"Positives"),
-                React.createElement("text",{className:'text-display'},number.pros),
-                React.createElement("br",{}),
-                React.createElement("label",{},"Negatives"),
-                React.createElement("text",{className:'text-display'},number.cons),
-                React.createElement("br",{}),
-                React.createElement("label",{},"Useful Stuff"),
-                React.createElement("text",{className:'text-display'},number.stuff),
-                React.createElement("br",{}), 
-                React.createElement("label",{},"Rating"),
-                React.createElement("text",{className:'star-display'},stars),
+        constructor(props) {
+          super(props)
+          this.state = Object.assign({}, { reviews: props.reviews });
+        }
+        componentDidMount() {
+          var crsId = document.getElementById('courseId').value;
+          fetch('../reviews?crsId='+ crsId)
+                .then(res => res.json())
+                .then(reviews => this.setState({ reviews: reviews }));
+          setInterval(
+            function(){
+              fetch('../reviews?crsId='+ crsId)
+                .then(res => res.json())
+                .then(reviews => this.setState({ reviews: reviews }));
+            }.bind(this), 30000);
+        }
+        render() {
+          if (this.state.reviews) {
+            const numbers = this.state.reviews;
+            return (
+              React.createElement("div", { className: 'container' },
+                React.createElement("div", { className: 'grid-container' },
+                  this.state.reviews.map((number) => {
+                    var stars = [];
+                    var rating = number.rating;
+                    var i =0;
+                    while (i<rating){stars.push('☆');i++;};
+                    return React.createElement("div", { key: number._id, className: 'grid-item' }, 
+
+                        React.createElement("table", {},
+                          React.createElement("tbody", {},
+                            React.createElement("tr", {},
+                              React.createElement("th", {},
+                                React.createElement("label", {}, "Positives")
+                              ),
+                              React.createElement("th", {},
+                                React.createElement("label", {}, "Negatives")
+                              ),
+                              React.createElement("th", {},
+                                React.createElement("label", {}, "Useful")
+                              ),
+                              React.createElement("th", {},
+                                React.createElement("label", {}, "Rating")
+                              ),
+                            ),
+                            React.createElement("tr", {},
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.pros)
+                              ),
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.cons)
+                              ),
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.stuff)
+                              ),
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, stars)
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        React.createElement("table", {},
+                          React.createElement("tbody", {},
+                            React.createElement("tr", {},
+                              React.createElement("td", {},
+                                React.createElement("label", {}, "Positives")
+                              ),
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.pros)
+                              ),
+                            ),
+                            React.createElement("tr", {},
+                              React.createElement("td", {},
+                                React.createElement("label", {}, "Negatives")
+                              ),                
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.cons)
+                              ),
+                            ),
+                            React.createElement("tr", {},
+                              React.createElement("td", {},
+                                React.createElement("label", {}, "Useful")
+                              ),     
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.stuff)
+                              ),
+                            ),
+                            React.createElement("tr", {},
+                              React.createElement("td", {},
+                                React.createElement("label", {}, "Rating")
+                              ),
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, stars)
+                              ),
+                            ),
+                          ),
+                        ),             
+                      )
+                    }
+                  )
+                )
               )
-      })
-      )
-      )
-      )
-      }
-      }
+            )
+          }
+        }
       }
       const reviews = []
       ReactDOM.render(
-      React.createElement(CourseComponent, { reviews: reviews }),
-      document.getElementById("hello")
+        React.createElement(CourseComponent, { reviews: reviews }),
+        document.getElementById("hello")
       );
 
     script.
