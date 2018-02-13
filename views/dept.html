@@ -51,20 +51,64 @@
         class CourseComponent extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = Object.assign({}, { courses: props.courses });
+                this.state = Object.assign({}, { courses: props.courses, search: '' });
             }
             componentDidMount() {
+                this.fetchAll();
+            }
+            fetchAll() {
                 fetch('../dep')
                     .then(res => res.json())
                     .then(courses => this.setState({ courses: courses }));
+
+            }
+            updateSearch(event) {
+                this.setState({ search: event.target.value.substr(0, 20) });
+            }
+            addReview(event) {
+                event.preventDefault();
+                //console.log(this);
+                var data = { depC: this.refs.first.value, dept: this.refs.second.value };
+                this.setState({
+                    courses: this.state.courses.concat(data)
+                })
+
+                this.refs.first.value = '';
+                this.refs.second.value = '';
+                this.postReview(data);
+            }
+            postReview(data) {
+                const headers = new Headers();
+                headers.append('Content-Type', 'application/json');
+                const options = {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(data)
+                }
+                const req = new Request('http://localhost:3001/post', options);
+                const res = fetch(req);
+                const status = res.status;
             }
             render() {
                 if (this.state.courses) {
                     const numbers = this.state.courses;
+                    let depts = this.state.courses.filter(
+                        (dep) => {
+                            return (dep.dept + dep.depC).toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+                        }
+                    );
                     return (
                         React.createElement("div", { className: 'container' },
+                            React.createElement("div", { className: 'jumbotron container' },
+                                React.createElement("input", { type: 'text', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Department' }),
+                                React.createElement("form", { onSubmit: this.addReview.bind(this) },
+                                    React.createElement("input", { type: 'text', ref: 'first', required: true, placeholder: 'Enter first' }),
+                                    React.createElement("input", { type: 'text', ref: 'second', required: true, placeholder: 'Enter Second' }),
+                                    React.createElement("button", { type: 'submit' }, "Add"),
+                                ),
+                            ),
                             React.createElement("div", { className: 'grid-container' },
-                                this.state.courses.map((number) => {
+                                depts.map((number) => {
                                     return React.createElement("a", { key: number.depC, className: 'grid-item', href: '../course?depId=' + number.depC }, number.depC + " - " + number.dept)
 
                                 })

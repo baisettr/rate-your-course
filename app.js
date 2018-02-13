@@ -95,6 +95,11 @@ app.post('/delete', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
 
+app.post('/post', function (req, res) {
+    console.log(req.body);
+    res.json({ done: true });
+});
+
 app.get('/review', function (req, res) {
     var crsId = req.query.crsId;
     var depId = req.query.depId;
@@ -109,7 +114,8 @@ app.post('/review', function (req, res) {
         .then(() => {
             console.log("save");
             //res.render('course.pug', { depId: req.body.crsId.match('[a-zA-Z]*')[0] });
-            res.render('review.pug', { reviews: 'CS', crsId: req.body.crsId });
+            //res.render('review.pug', { reviews: 'CS', crsId: req.body.crsId });
+            res.json({ 'a': 1 });
         });
 })
 
