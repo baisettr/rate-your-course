@@ -2,14 +2,17 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const ReviewSchema = new schema({
-    crsId: String,
-    pros: String,
-    cons: String,
-    stuff: String,
-    feedback: String,
-    rating: Number
+    courseId: String,
+    courseTerm: String,
+    coursePros: String,
+    courseCons: String,
+    courseLinks: String,
+    courseTips: String,
+    courseFeedback: String,
+    courseRating: Number,
+    courseOverall: Number
 });
 
-const Review = mongoose.model('reviews', ReviewSchema);
+const Review = mongoose.model('review', ReviewSchema);
 
 module.exports = Review;
