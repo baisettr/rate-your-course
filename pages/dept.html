@@ -57,7 +57,7 @@
                 this.fetchAll();
             }
             fetchAll() {
-                fetch('./dept/depts')
+                fetch('../dep')
                     .then(res => res.json())
                     .then(courses => this.setState({ courses: courses }));
 
@@ -85,7 +85,7 @@
                     headers,
                     body: JSON.stringify(data)
                 }
-                const req = new Request('http://localhost:3001/univ/dept/post', options);
+                const req = new Request('http://localhost:3001/post', options);
                 const res = fetch(req);
                 const status = res.status;
             }
@@ -109,7 +109,7 @@
                             ),
                             React.createElement("div", { className: 'grid-container' },
                                 depts.map((number) => {
-                                    return React.createElement("a", { key: number.depC, className: 'grid-item', href: './dept/course?deptId=' + number.depC }, number.depC + " - " + number.dept)
+                                    return React.createElement("a", { key: number.depC, className: 'grid-item', href: '../course?depId=' + number.depC }, number.depC + " - " + number.dept)
 
                                 })
                             )

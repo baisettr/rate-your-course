@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	.container
+		.jumbotron
+			h2.b.align.center The page you requested isn't available.
+			h5.align.center Please check your URL (may be misspelled) or Try Again.
+			hr.my-4
+			pre #{error.stack}
+			pre #{error.message}
+			p.lead
+				a.btn.btn-primary(href="/", role="button") Proceed to Home
+

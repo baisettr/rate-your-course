@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var request = require('request');
 
 
 router.get('/', function (req, res, next) {
@@ -19,9 +20,11 @@ router.post('/callback', function (req, res) {
         result = JSON.parse(response.body);
         //console.log(result);
         if (result.isvalid) {
-            res.session.isvalid = true;
+            req.session.isvalid = true;
             res.redirect('./univ/dept');
         }
         else { res.redirect('/') }
     })
 });
+
+module.exports = router;

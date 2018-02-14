@@ -1,9 +1,10 @@
 const express = require('express');
 router = express.Router();
+var path = require('path');
 var courses = require('../views/courses.json');
 
 router.get('/', function (req, res, next) {
-    res.sendFile(__dirname + '../views/dept.html');
+    res.sendFile(path.join(__dirname, '..', '/views', 'dept.html'));
 });
 
 router.get('/depts', function (req, res, next) {
@@ -18,3 +19,5 @@ router.post('/post', function (req, res) {
     console.log(req.body);
     res.json({ done: true });
 });
+
+module.exports = router;

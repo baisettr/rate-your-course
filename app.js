@@ -1,6 +1,7 @@
 const express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var request = require('request');
 var favicon = require('serve-favicon');
 
@@ -29,10 +30,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/images/logo.png'));
 
-//app.use(express.static(__dirname + '/views'));
+//app.use(express.static(__dirname + '/pages'));
 //app.use(express.static(__dirname + '/scripts'));
 
-mongoose.connect('mongodb://' + mongoOptions.host + '/' + mongoOptions.db);
+mongoose.connect(mongoOptions.url);
 mongoose.Promise = global.Promise;
 
 app.use(session({

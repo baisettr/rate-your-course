@@ -1,5 +1,6 @@
-html
-    header
+extends layout
+
+block content
     style.
         body { 
         //background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
@@ -76,7 +77,7 @@ html
             background-color: wheat;
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 10px;
-            font-size: 20px;
+            font-size: 15px;
         }
 
         .grid-item1 {
@@ -97,22 +98,16 @@ html
             //padding-bottom: 8px;
             //border-bottom: 1px solid rgb(99, 96, 96);
         }
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js")
-    body
-      <div id='changeBack' style="background-image: url(https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg); height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;"> 
-      .page-header.container
-        h2(style='color:orange;text-align:center;') Oregon State University
-        a.backToLink(href="../course?depId="+depId, style='color: white;', id='backTo.link') «Back to Courses
+
+    <div id='changeBack' style="background-image: url(https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg); height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;"> 
+      h2(style='color:orange;text-align:center;') Oregon State University
+      a.backToLink(href="../course?deptId="+deptId, style='color: white;', id='backTo.link') «Back to Courses
       
       br
       br
       .jumbotron.container(style=' background-color: rgba(192,192,192,0.3);text-align:center;')
-        input(type='hidden',name='crsId',id='courseId', value=crsId)
-        h2(style='color:white;text-align:left;') #{crsId}
+        input(type='hidden',name='courseId',id='courseId', value=courseId)
+        h2(style='color:white;text-align:left;') #{courseId}
         h4(style='color:white;text-align:center;') Overall Rating
         br
         input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
@@ -121,12 +116,13 @@ html
           .modal-content
             .modal-header.h4 Leave a Review
             .modal-body
-              form#formfield.form-horizontal(method='post')
-                input(type='hidden',name='crsId',id='courseId', value=crsId)
+              form#formfield.form-horizontal(method='post',action='./review/addReview')
+                input(type='hidden',name='courseId',id='courseId', value=courseId)
+                input(type='hidden',name='deptId',id='deptId', value=deptId)
                 .form-group
                   label Which term did you took the course
                   | 
-                  select(name='term' id='term' class='form-control' required)
+                  select(name='courseTerm' id='term' class='form-control' required)
                     option(value='default') Select Term
                     option(value='fall') Fall
                     option(value='winter') Winter
@@ -134,35 +130,35 @@ html
                     option(value='summer') Summer
                 .form-group
                   label Things which you liked about the course
-                  textarea#pros.form-control(placeholder='Enter pros about this course', name='pros',rows='2',maxlength='500',required)
+                  textarea#coursePros.form-control(placeholder='Enter pros about this course', name='coursePros',rows='2',maxlength='500',required)
                 .form-group
                   label Drawbacks
-                  textarea#cons.form-control(placeholder='Enter cons', name='cons',rows='1',maxlength='500',required)
+                  textarea#courseCons.form-control(placeholder='Enter cons', name='courseCons',rows='1',maxlength='500',required)
                 .form-group
                   label Useful links or Subject Stuff
-                  textarea#extra.form-control(placeholder='Enter cons', name='extra',rows='1',maxlength='500',required)
+                  textarea#courseLinks.form-control(placeholder='Enter cons', name='courseLinks',rows='1',maxlength='500',required)
                 .form-group
                   label Pre tips or suggestions to your peers
-                  textarea#extra.form-control(placeholder='Enter suggestions', name='sugges',rows='1',maxlength='500',required)
+                  textarea#courseTips.form-control(placeholder='Enter suggestions', name='courseTips',rows='1',maxlength='500',required)
                 .form-group
                   label Feedback or Suggestions to Improve
-                  textarea#feedback.form-control(placeholder='Enter here', name='feedback',rows='1',maxlength='500',required)
+                  textarea#courseFeedback.form-control(placeholder='Enter here', name='courseFeedback',rows='1',maxlength='500',required)
                 .form-group
                   label Rate on a scale of 0 - 10 : 
                   | 
-                  input(type="number" name='rating' id='rating' min='0' max='5')
+                  input(type="number" name='courseRating' id='rating' min='0' max='10')
                 .form-group
                   label Overall feedback
                   .rating.h3
-                    input#star5.radio-btn.hide(name='star',type='radio', value='5')
+                    input#star5.radio-btn.hide(name='courseOverall',type='radio', value='5')
                     label(for='star5') ☆
-                    input#star4.radio-btn.hide(name='star', type='radio', value='4')
+                    input#star4.radio-btn.hide(name='courseOverall', type='radio', value='4')
                     label(for='star4') ☆
-                    input#star3.radio-btn.hide(name='star',type='radio', value='3')
+                    input#star3.radio-btn.hide(name='courseOverall',type='radio', value='3')
                     label(for='star3') ☆
-                    input#star2.radio-btn.hide(name='star', type='radio', value='2')
+                    input#star2.radio-btn.hide(name='courseOverall', type='radio', value='2')
                     label(for='star2') ☆
-                    input#star1.radio-btn.hide(name='star', type='radio', value='1')
+                    input#star1.radio-btn.hide(name='courseOverall', type='radio', value='1')
                     label(for='star1') ☆
                     .clear
                 .form-group(style='color:white;text-align:left;')
@@ -171,7 +167,7 @@ html
                       button.btn.btn-default(type='button', data-dismiss='modal') Cancel
                     .col-sm-2
                       input#postBtn.btn.btn-success(type='submit', name='save', value='Post')
-      </div>
+    </div>
     br
     br
     br
@@ -183,13 +179,13 @@ html
           this.state = Object.assign({}, { reviews: props.reviews });
         }
         componentDidMount() {
-          var crsId = document.getElementById('courseId').value;
-          fetch('../reviews?crsId='+ crsId)
+          var courseId = document.getElementById('courseId').value;
+          fetch('./review/reviews?courseId='+ courseId)
                 .then(res => res.json())
                 .then(reviews => this.setState({ reviews: reviews }));
           setInterval(
             function(){
-              fetch('../reviews?crsId='+ crsId)
+              fetch('./review/reviews?courseId='+ courseId)
                 .then(res => res.json())
                 .then(reviews => this.setState({ reviews: reviews }));
             }.bind(this), 30000);
@@ -202,52 +198,27 @@ html
                 React.createElement("div", { className: 'grid-container' },
                   this.state.reviews.map((number) => {
                     var stars = [];
-                    var rating = number.rating;
+                    var rating = number.courseOverall;
                     var i =0;
                     while (i<rating){stars.push('☆');i++;};
-                    return React.createElement("div", { key: number._id, className: 'grid-item' }, 
-
+                    return React.createElement("div", { key: number._id, className: 'grid-item' },
+                  
                         React.createElement("table", {},
                           React.createElement("tbody", {},
                             React.createElement("tr", {},
-                              React.createElement("th", {},
-                                React.createElement("label", {}, "Positives")
+                              React.createElement("td", {},
+                                React.createElement("label", {}, "Term")
                               ),
-                              React.createElement("th", {},
-                                React.createElement("label", {}, "Negatives")
-                              ),
-                              React.createElement("th", {},
-                                React.createElement("label", {}, "Useful")
-                              ),
-                              React.createElement("th", {},
-                                React.createElement("label", {}, "Rating")
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.courseTerm)
                               ),
                             ),
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.pros)
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.cons)
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.stuff)
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, stars)
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        React.createElement("table", {},
-                          React.createElement("tbody", {},
                             React.createElement("tr", {},
                               React.createElement("td", {},
                                 React.createElement("label", {}, "Positives")
                               ),
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.pros)
+                                React.createElement("text", {className:'text-display'}, number.coursePros)
                               ),
                             ),
                             React.createElement("tr", {},
@@ -255,15 +226,23 @@ html
                                 React.createElement("label", {}, "Negatives")
                               ),                
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.cons)
+                                React.createElement("text", {className:'text-display'}, number.courseCons)
                               ),
                             ),
                             React.createElement("tr", {},
                               React.createElement("td", {},
-                                React.createElement("label", {}, "Useful")
+                                React.createElement("label", {}, "Links")
                               ),     
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.stuff)
+                                React.createElement("text", {className:'text-display'}, number.courseLinks)
+                              ),
+                            ),
+                            React.createElement("tr", {},
+                              React.createElement("td", {},
+                                React.createElement("label", {}, "Suggestions")
+                              ),
+                              React.createElement("td", {},
+                                React.createElement("text", {className:'text-display'}, number.courseTips)
                               ),
                             ),
                             React.createElement("tr", {},
@@ -341,19 +320,19 @@ html
       
               }
               if( $(this).val() == "winter" ) { 
-         $("#changeBack").attr('style','background-image: url(http://news.psu.edu/sites/default/files/styles/photo_gallery_large/public/2%2027%20snow%20fall%20003.jpg?itok=fl4KaX2A);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBack").attr('style','background-image: url(http://news.psu.edu/sites/default/files/styles/photo_gallery_large/public/2%2027%20snow%20fall%20003.jpg?itok=fl4KaX2A);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
       
               }
               if( $(this).val() == "spring" ) { 
-         $("#changeBack").attr('style','background-image: url(http://uhds.oregonstate.edu/sites/uhds.oregonstate.edu/files/illc_0.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBack").attr('style','background-image: url(http://uhds.oregonstate.edu/sites/uhds.oregonstate.edu/files/illc_0.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
       
               }
               if( $(this).val() == "summer" ) { 
-         $("#changeBack").attr('style','background-image: url(http://summer.oregonstate.edu/images/proprietary/students/legs-MU.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBack").attr('style','background-image: url(http://summer.oregonstate.edu/images/proprietary/students/legs-MU.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
       
               }
               if( $(this).val() == "default" ) { 
-         $("#changeBack").attr('style','background-image: url(https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBack").attr('style','background-image: url(https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
       
               }
               
@@ -366,9 +345,9 @@ html
         var feedback = $('#feedback').val();
         var extra = $('#extra').val();
         var star = $('#star5').val();
-          $.post('review?crsId=CS562&depId=CS', { pros: pros, cons: cons, feedback: feedback, extra: extra,star:star}).done(function (data) {
+          $.post('review?courseId=CS562&deptId=CS', { pros: pros, cons: cons, feedback: feedback, extra: extra,star:star}).done(function (data) {
             console.log(data);
             });
-          }
+      }
 
-      
+        

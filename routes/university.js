@@ -13,3 +13,5 @@ router.get('/univs', function (req, res, next) {
 router.post('/addUniv', function (req, res, next) {
 
 });
+
+module.exports = router;

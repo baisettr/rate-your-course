@@ -1,5 +1,6 @@
-html
-  body
+extends layout
+
+block content
     style.
         body { 
             background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
@@ -34,7 +35,7 @@ html
         text-align: center;
         }
     #hello
-    input#dept(type='hidden', value=depId)
+    input#dept(type='hidden', value=deptId)
     script(src='https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
@@ -42,14 +43,14 @@ html
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
     script(src='https://unpkg.com/sweetalert/dist/sweetalert.min.js')
     script.
-        var depId= document.getElementById("dept").value;
+        var deptId= document.getElementById("dept").value;
         class CourseComponent extends React.Component {
         constructor(props) {
         super(props);
         this.state = Object.assign({}, { courses: props.courses });
         }
         componentDidMount() {
-        fetch('../crs?depId=' + depId)
+        fetch('./course/courses?deptId=' + deptId)
         .then(res => res.json())
         .then(courses => this.setState({ courses: courses }));
         }
@@ -60,7 +61,7 @@ html
         React.createElement("div", { className: 'container' },
         React.createElement("div", { className: 'grid-container' },
         this.state.courses.map((number) => {
-        return React.createElement("a", { key: number.crsNr, className: 'grid-item', href: '../review?crsId=' + depId+number.crsNr+'&depId='+depId }, number.crsNr + " - " + number.crsNme)
+        return React.createElement("a", { key: number.crsNr, className: 'grid-item', href: './course/review?courseId=' + deptId+number.crsNr+'&deptId='+deptId }, number.crsNr + " - " + number.crsNme)
         })
         )
         )
