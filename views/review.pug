@@ -1,178 +1,156 @@
 extends layout
 
 block content
-    style.
-        body { 
-        //background: url("http://designerswallpaper.com/image/data/categories/plain.jpg") no-repeat center center fixed; 
-        background-size: cover;
-        height: 100%;   
-        }
-        .txt-center {
-        text-align: center;
-        }
-        .hide {
-        display: none;
-        }
-        .clear {
-        float: none;
-        clear: both;
-        }
-        .rating {
-        width: 160px;
-        unicode-bidi: bidi-override;
-        direction: rtl;
-        text-align: center;
-        position: relative;
-        }
-        .rating>label {
-        float: right;
-        display: inline;
-        padding: 0;
-        margin: 0;
-        position: relative;
-        width: 1.1em;
-        cursor: pointer;
-        color: #000;
-        }
-        .rating>label:hover,
-        .rating>label:hover~label,
-        .rating>input.radio-btn:checked~label {
-        color: transparent;
-        }
-        .rating>label:hover:before,
-        .rating>label:hover~label:before,
-        .rating>input.radio-btn:checked~label:before,
-        .rating>input.radio-btn:checked~label:before {
-        content: "\2605";
-        position: absolute;
-        left: 0;
-        color: #FFD700;
-        }
-        .text-display {
-          color: orange;
-          //padding:20px;
-        }
-        .star-display {
-          content: "\2605";
-          color: brown;
-          padding:10px;
-        }
-        
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
-            grid-gap: 50px;
-            object-fit: cover;
-            padding: 10px;
-        }
-        a {
-            color: #080808;
-            text-decoration: none;
-        }
-        a:hover {
-            color: white;
-        }
+  style.
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
+      grid-gap: 50px;
+      object-fit: cover;
+      padding: 10px;
+    }
+    
+    .grid-item {
+      background-color: wheat;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      font-size: 17px;
+      border-radius:15px;
+    }
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
 
-        .grid-item {
-            background-color: wheat;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            font-size: 15px;
-        }
+    .bg {
+      /* The image used */
+      background-image: url("https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg");
 
-        .grid-item1 {
-            background-color: rgba(201, 155, 187, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            font-size: 30px;
-            text-align: center;
-        }
-        table {
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 15px;
-        }
-        th,td {
-            text-align: left;
-            padding: 5px;
-            //padding-bottom: 8px;
-            //border-bottom: 1px solid rgb(99, 96, 96);
-        }
+      /* Full height */
+      height: 100%; 
 
-    <div id='changeBack' style="background-image: url(https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg); height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;"> 
-      h2(style='color:orange;text-align:center;') Oregon State University
-      a.backToLink(href="../course?deptId="+deptId, style='color: white;', id='backTo.link') «Back to Courses
-      
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      text-align:center;
+    }
+    .h2-display {
+      color: orange;
+      text-align:center;
+    }
+    .jumbo-display {
+      background-color: rgba(192,192,192,0.3);
+      text-align:center;
+    }
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+  div(class='bg' id='changeBack')
+    h2(style='color:orange;text-align:center;') Oregon State University
+    a.h5.backToLink(href="../course?deptId="+deptId, style='color: brown;', id='backTo') «Back to Courses
+    
+    br
+    br
+    .jumbotron.container(style=' background-color: rgba(192,192,192,0.3);text-align:center;')
+      input(type='hidden',name='courseId',id='courseId', value=courseId)
+      h2(style='color:white;text-align:left;') #{courseId}
+      h4(style='color:white;text-align:center;') Overall Rating
       br
-      br
-      .jumbotron.container(style=' background-color: rgba(192,192,192,0.3);text-align:center;')
-        input(type='hidden',name='courseId',id='courseId', value=courseId)
-        h2(style='color:white;text-align:left;') #{courseId}
-        h4(style='color:white;text-align:center;') Overall Rating
-        br
-        input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
-      #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-        .modal-dialog.modal-dialog-centered
-          .modal-content
-            .modal-header.h4 Leave a Review
-            .modal-body
-              form#formfield.form-horizontal(method='post',action='./review/addReview')
-                input(type='hidden',name='courseId',id='courseId', value=courseId)
-                input(type='hidden',name='deptId',id='deptId', value=deptId)
-                .form-group
-                  label Which term did you took the course
-                  | 
-                  select(name='courseTerm' id='term' class='form-control' required)
-                    option(value='default') Select Term
-                    option(value='fall') Fall
-                    option(value='winter') Winter
-                    option(value='spring') Spring
-                    option(value='summer') Summer
-                .form-group
-                  label Things which you liked about the course
-                  textarea#coursePros.form-control(placeholder='Enter pros about this course', name='coursePros',rows='2',maxlength='500',required)
-                .form-group
-                  label Drawbacks
-                  textarea#courseCons.form-control(placeholder='Enter cons', name='courseCons',rows='1',maxlength='500',required)
-                .form-group
-                  label Useful links or Subject Stuff
-                  textarea#courseLinks.form-control(placeholder='Enter cons', name='courseLinks',rows='1',maxlength='500',required)
-                .form-group
-                  label Pre tips or suggestions to your peers
-                  textarea#courseTips.form-control(placeholder='Enter suggestions', name='courseTips',rows='1',maxlength='500',required)
-                .form-group
-                  label Feedback or Suggestions to Improve
-                  textarea#courseFeedback.form-control(placeholder='Enter here', name='courseFeedback',rows='1',maxlength='500',required)
-                .form-group
-                  label Rate on a scale of 0 - 10 : 
-                  | 
-                  input(type="number" name='courseRating' id='rating' min='0' max='10')
-                .form-group
-                  label Overall feedback
-                  .rating.h3
-                    input#star5.radio-btn.hide(name='courseOverall',type='radio', value='5')
-                    label(for='star5') ☆
-                    input#star4.radio-btn.hide(name='courseOverall', type='radio', value='4')
-                    label(for='star4') ☆
-                    input#star3.radio-btn.hide(name='courseOverall',type='radio', value='3')
-                    label(for='star3') ☆
-                    input#star2.radio-btn.hide(name='courseOverall', type='radio', value='2')
-                    label(for='star2') ☆
-                    input#star1.radio-btn.hide(name='courseOverall', type='radio', value='1')
-                    label(for='star1') ☆
-                    .clear
-                .form-group(style='color:white;text-align:left;')
-                  .row
-                    .col-sm-2
-                      button.btn.btn-default(type='button', data-dismiss='modal') Cancel
-                    .col-sm-2
-                      input#postBtn.btn.btn-success(type='submit', name='save', value='Post')
-    </div>
-    br
-    br
-    br
-    #hello
+      input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
+  #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header.h4 Leave a Review
+        .modal-body
+          form#formfield.form-horizontal(method='post',action='./review/addReview')
+            input(type='hidden',name='courseId',id='courseId', value=courseId)
+            input(type='hidden',name='deptId',id='deptId', value=deptId)
+            .form-group
+              label Which term did you took the course
+              | 
+              select(name='courseTerm' id='term' class='form-control' required)
+                option(value='default') Select Term
+                option(value='Fall') Fall
+                option(value='Winter') Winter
+                option(value='Spring') Spring
+                option(value='Summer') Summer
+            .form-group
+              label Things which you liked about the course
+              textarea#coursePros.form-control(placeholder='Enter pros about this course', name='coursePros',rows='2',maxlength='500',required)
+            .form-group
+              label Drawbacks
+              textarea#courseCons.form-control(placeholder='Enter cons', name='courseCons',rows='1',maxlength='500',required)
+            .form-group
+              label Useful links or Subject Stuff
+              textarea#courseLinks.form-control(placeholder='Enter cons', name='courseLinks',rows='1',maxlength='500',required)
+            .form-group
+              label Pre tips or suggestions to your peers
+              textarea#courseTips.form-control(placeholder='Enter suggestions', name='courseTips',rows='1',maxlength='500',required)
+            .form-group
+              label Feedback or Suggestions to Improve
+              textarea#courseFeedback.form-control(placeholder='Enter here', name='courseFeedback',rows='1',maxlength='500',required)
+            .form-group
+              label Rate on a scale of 0 - 10 : 
+              | 
+              input(type="number" name='courseRating' id='rating' min='0' max='10')
+            .form-group
+              label Overall feedback
+              .rating.h3
+                input#star5.radio-btn.hide(name='courseOverall',type='radio', value='5')
+                label(for='star5') ☆
+                input#star4.radio-btn.hide(name='courseOverall', type='radio', value='4')
+                label(for='star4') ☆
+                input#star3.radio-btn.hide(name='courseOverall',type='radio', value='3')
+                label(for='star3') ☆
+                input#star2.radio-btn.hide(name='courseOverall', type='radio', value='2')
+                label(for='star2') ☆
+                input#star1.radio-btn.hide(name='courseOverall', type='radio', value='1')
+                label(for='star1') ☆
+                .clear
+            .form-group(style='color:white;text-align:left;')
+              .row
+                .col-sm-2
+                  button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+                .col-sm-2
+                  input#postBtn.btn.btn-success(type='submit', name='save', value='Post')
+  br
+  br
+  h2(style='text-align:center;color:cornflowerblue;') Course Reviews
+  br
+  #hello
     script.
+      class RatingComponent extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = Object.assign({}, { reviews: props.reviews,deptId:'CS' });
+        }
+        componentDidMount() {
+        }
+        render() {
+          return (
+            React.createElement("div", { className: 'bg',ref:'changeBack' },
+              React.createElement("h2", { className: 'h2-display',ref:'changeBack' },'Oregon State University'),
+              React.createElement("a", { href:'../course?deptId='+this.state.deptId,className: 'h2-display',ref:'backTo' },'«Back to Courses'),
+              React.createElement("div", { className: 'jumbotron container jumbo-display' },
+                React.createElement("h2", { className: 'h2-display',ref:'changeBack' },'Oregon State University'),
+                React.createElement("h2", { className: 'h2-display',ref:'changeBack' },'Oregon State University'),
+                React.createElement("button", { className: 'h2-display',ref:'changeBack' },'Oregon State University'),
+              ),
+            )
+        }
+      }
+      class ModalComponent extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = Object.assign({}, { reviews: props.reviews });
+        }
+        componentDidMount() {
+        }
+        render() {
+          return (
+            React.createElement("div", { className: 'container' },)
+        }
+      }
+
       class CourseComponent extends React.Component {
         constructor(props) {
           super(props)
@@ -250,7 +228,7 @@ block content
                                 React.createElement("label", {}, "Rating")
                               ),
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, stars)
+                                React.createElement("text", {className:'star-display'}, stars)
                               ),
                             ),
                           ),
@@ -271,74 +249,41 @@ block content
       );
 
     script.
-      $('#deleteBtn').click(function () {
-      $('#lname').text($('#lastname').val());
-      $('#fname').text($('#firstname').val());
-      });
-      $('#swalBtn').click(function () {
-      //swal('Hello');
-      swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-      })
-      .then((willDelete) => {
-      if (willDelete) {
-      $('#toDelete').attr('value', 'true')
-      $('#formfield').submit();
-      } else {
-      //swal.close();
-      return false;
-      }
-      });
-      });
-      $('#submitModal').click(function () {
-      $('#toDelete').attr('value', 'true')
-      $('#formfield').submit();
-      });
       $(document).ready(function () {
       // Check Radio-box
-      $(".rating input:radio").attr("checked", false);
-      $('.rating input').click(function () {
-      $(".rating span").removeClass('checked');
-      $(this).parent().addClass('checked');
-      });
-      $('input:radio').change(
-      function () {
-      var userRating = this.value;
-      //alert(userRating);
-      });
+        $(".rating input:radio").attr("checked", false);
+        $('.rating input').click(function () {
+          $(".rating span").removeClass('checked');
+          $(this).parent().addClass('checked');
+        });
         
-
         $("#term").change(function(){
-          console.log($(this).val())
-          if ( $(this).val() === "fall" ) { 
+          if ( $(this).val() === "Fall" ) { 
             
             $("#changeBack").attr('style','background-image: url(https://s-media-cache-ak0.pinimg.com/originals/73/8a/ee/738aeed88a4e4eeb4e3960f42a1e1254.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-      
+            $("#backTo").attr('style','color:white;');
               }
-              if( $(this).val() == "winter" ) { 
+              if( $(this).val() == "Winter" ) { 
           $("#changeBack").attr('style','background-image: url(http://news.psu.edu/sites/default/files/styles/photo_gallery_large/public/2%2027%20snow%20fall%20003.jpg?itok=fl4KaX2A);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-      
+          $("#backTo").attr('style','color:brown;');
               }
-              if( $(this).val() == "spring" ) { 
+              if( $(this).val() == "Spring" ) { 
           $("#changeBack").attr('style','background-image: url(http://uhds.oregonstate.edu/sites/uhds.oregonstate.edu/files/illc_0.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-      
+          $("#backTo").attr('style','color:brown;');
               }
-              if( $(this).val() == "summer" ) { 
+              if( $(this).val() == "Summer" ) { 
           $("#changeBack").attr('style','background-image: url(http://summer.oregonstate.edu/images/proprietary/students/legs-MU.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-      
+          $("#backTo").attr('style','color:brown;');
               }
               if( $(this).val() == "default" ) { 
           $("#changeBack").attr('style','background-image: url(https://www.hd-wallpapersdownload.com/script/new-wallpaper/desktop-abstract-black-background-download.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-      
+          $("#backTo").attr('style','color:brown;');
               }
               
           
           }); 
       });
+
       function refresh() {
         var pros = $('#pros').val();
         var cons = $('#cons').val();

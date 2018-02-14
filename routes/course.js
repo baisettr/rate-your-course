@@ -20,7 +20,8 @@ router.get('/courses', function (req, res, next) {
 
 
 router.post('/addCourse', function (req, res, next) {
-
+    console.log(req.body);
+    res.json({ done: true });
 });
 
 module.exports = router;
