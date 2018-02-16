@@ -1,9 +1,76 @@
 <html>
-<header>
 
-    <body>
-        <h2> Hello
-    </body>
-</header>
+<head>
+    <style>
+        .flex-container {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+            text-align: center;
+        }
+
+        .flex-container>* {
+            padding: 15px;
+            -webkit-flex: 1 100%;
+            flex: 1 100%;
+        }
+
+        @media all and (min-width: 768px) {
+            .x1 {
+                text-align: left;
+                -webkit-flex: 1 auto;
+                flex: 1 auto;
+                -webkit-order: 1;
+                order: 1;
+            }
+            .x2 {
+                -webkit-flex: 5 0px;
+                flex: 5 0px;
+                -webkit-order: 2;
+                order: 2;
+            }
+            footer {
+                -webkit-order: 3;
+                order: 3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <header>
+            <h1 style="text-align:center;border-style: solid;">A</h1>
+        </header>
+        <div class="x1" style="border-style: solid;height:7%;">
+            <h1 style="float:left;">B</h1>
+        </div>
+        <div class="x2" style="border-style: dashed;">
+            <h1 style="float:right; border-style:solid;border-radius:200px">C1</h1>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1 style="float:left; display:inline-block; border-style:solid;border-radius:200px">C2</h1>
+            <h1 style="float:center; display:inline-block;">C</h1>
+        </div>
+    </div>
+
+
+    <div style="display:inline-block;width:25%"></div>
+    <div style="border-left:2px solid black; border-right: 2px solid black;;display:inline-block;width:50%">
+        <h1 style="text-align:left">D</h1>
+    </div>
+    <div style="display:inline-block;width:25%"></div>
+
+
+    <footer style="text-align:right;border-top:2px solid black; border-bottom: 2px solid black;">
+        <h1>E
+        </h1>
+    </footer>
+
+</body>
+
 
 </html>

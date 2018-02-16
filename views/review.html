@@ -1,0 +1,157 @@
+<html>
+<header>
+    <style>
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+    <body>
+
+        <div id="hello" class="backdrop"></div>
+        <div id="hello" class="backdrop"></div>
+
+        <script>
+            class BootstrapModal extends React.Component {
+
+                save(e) {
+                    console.log(e);
+                }
+                render() {
+                    if (!this.props.isOpen) {
+                        return (
+                            React.createElement("div", { className: 'modal', id: 'myMod' },
+                                //React.createElement("div", { className: 'modal fade', id: 'myModal', tabIndex: -1, role: 'dialog', 'aria-labelledby': 'label', 'aria-hidden': true },
+                                React.createElement("div", { className: 'modal-dialog' },
+                                    React.createElement("div", { className: 'modal-content' },
+                                        React.createElement("div", { className: 'modal-header' },
+                                            React.createElement("button", { className: 'close', 'data-dismiss': 'modal' },
+                                                React.createElement('span', { 'aria-hidden': true }, 'X'),
+                                                React.createElement('span', { className: 'sr-only' }, 'Close'),
+                                            ),
+                                        ),
+                                        React.createElement("div", { className: 'modal-body' },
+                                            React.createElement("button", { className: 'btn' }, "Hello"),
+                                        ),
+                                        React.createElement("div", { className: 'modal-footer' },
+                                            React.createElement("button", { className: 'btn btn-default', 'data-dismiss': 'modal' }, 'Close'),
+                                            React.createElement("button", { className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.save.bind(this) }, "Save"),
+                                        ),
+                                    ),
+                                ),
+                            )
+                        )
+                    }
+                    else { return null }
+                }
+            }
+            class RatingComponent extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = Object.assign({}, { reviews: props.reviews, isOpen: false });
+                }
+                componentDidMount() {
+                }
+                showModal() {
+                    this.setState({ isOpen: true })
+                }
+                render() {
+                    return (
+                        React.createElement("div", { className: 'container' },
+                            React.createElement("div", { className: 'jumbotron' },
+                                //React.createElement("button", { className: 'btn btn-primary btn-lg', 'data-toggle': 'modal', 'data-target': '#myModal' }, "Add"),
+                                React.createElement("button", { className: 'btn btn-primary btn-lg', onClick: this.showModal.bind(this) }, "Show"),
+                                React.createElement(BootstrapModal, { isOpen: this.state.isOpen }),
+                            ),
+
+                        )
+                    )
+                }
+            }
+            class ModalComponent extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = Object.assign({}, { isMOpen: props.isOpen });
+                }
+                componentDidMount() {
+                }
+                close(e) {
+                    e.preventDefault()
+
+                    if (this.props.onClose) {
+                        this.props.onClose()
+                    }
+                }
+                render() {
+                    if (this.props.isOpen === false)
+                        return null
+
+                    let modalStyle = {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: '9999',
+                        background: '#fff'
+                    }
+                    let backdropStyle = {
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        top: '0px',
+                        left: '0px',
+                        zIndex: '9998',
+                        background: 'rgba(0, 0, 0, 0.3)'
+                    }
+                    return (
+
+                        React.createElement("div", {},
+                            React.createElement("div", { style: modalStyle }, this.props.children),
+                            React.createElement("div", { style: backdropStyle, onClick: this.close.bind(this) }),
+                        )
+                    )
+                }
+            }
+            class CourseComponent extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = Object.assign({}, { reviews: props.reviews, isModalOpen: false });
+                }
+                componentDidMount() {
+                }
+                openModal() {
+                    this.setState({ isModalOpen: true })
+                }
+                closeModal() {
+                    this.setState({ isModalOpen: false })
+                }
+                render() {
+                    if (this.state.reviews) {
+                        return (
+                            React.createElement("div", {},
+                                React.createElement('button', { onClick: this.openModal.bind(this) }, 'Open Modal'),
+                                React.createElement(ModalComponent, { isOpen: this.state.isModalOpen, onClose: this.closeModal.bind(this) },
+                                    React.createElement('h2', {}, 'Modal here'),
+                                    React.createElement('button', { onClick: this.closeModal.bind(this) }, 'Close Modal'),
+                                ),
+                                this.state.reviews.map((r) => {
+                                    return React.createElement('h2', { key: r.name }, r.name)
+                                }),
+                                React.createElement(RatingComponent, {})
+                            )
+                        )
+                    }
+                }
+            }
+            const reviews = [{ name: 'hello1' }, { name: 'hello2' }, { name: 'hello3' }]
+            ReactDOM.render(
+                React.createElement(CourseComponent, { reviews: reviews }),
+                document.getElementById("hello")
+            );
+        </script>
+    </body>
+</header>
+
+</html>
