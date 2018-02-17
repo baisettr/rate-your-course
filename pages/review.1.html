@@ -1,0 +1,131 @@
+<html>
+<header>
+    <style>
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+    <body>
+
+        <div id="hello" class="backdrop"></div>
+        <div id="hello" class="backdrop"></div>
+
+        <script>
+            class BootstrapModal extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = Object.assign({}, { reviews: props.reviews });
+                    this.onChange = props.onChange1;
+                }
+                save(e) {
+                    console.log(e);
+                    console.log(this.refs.nameAdd.value);
+                }
+                addReview(e) {
+
+                    console.log(this.refs.nameAdd.value);
+                    //console.log(this.state.reviews)
+                    e.preventDefault();
+                    $('#myModal').modal('toggle'); //$('#myModal').modal('hide');
+                    //var newReview = this.state.reviews.concat({ name: this.refs.nameAdd.value });
+                    //this.setState({ reviews: newReview })
+
+                    if (this.onChange) this.onChange({ name: this.refs.nameAdd.value });
+                }
+                render() {
+                    return (
+                        //React.createElement("div", { className: 'modal', id: 'myMod' },
+                        React.createElement("div", { className: 'modal fade', id: 'myModal', tabIndex: -1, role: 'dialog', 'aria-labelledby': 'label', 'aria-hidden': true },
+                            React.createElement("div", { className: 'modal-dialog' },
+                                React.createElement("div", { className: 'modal-content' },
+                                    React.createElement("div", { className: 'modal-header' },
+                                        React.createElement("button", { className: 'close', 'data-dismiss': 'modal' },
+                                            React.createElement('span', { 'aria-hidden': true }, 'X'),
+                                            React.createElement('span', { className: 'sr-only' }, 'Close'),
+                                        ),
+                                    ),
+                                    React.createElement("div", { className: 'modal-body' },
+                                        React.createElement("form", { onSubmit: this.addReview.bind(this) },
+                                            React.createElement("button", { type: 'submit', id: 'closeModal', className: 'btn' }, "Hello"),
+                                            React.createElement("INPUT", { type: "text", ref: "nameAdd", required: true }),
+                                        ),
+                                    ),
+                                    React.createElement("div", { className: 'modal-footer' },
+                                        React.createElement("button", { className: 'btn btn-default', 'data-dismiss': 'modal' }, 'Close'),
+                                        React.createElement("button", { className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.save.bind(this) }, "Save"),
+                                    ),
+                                ),
+                            ),
+                        )
+                    )
+
+                }
+            }
+            class RatingComponent extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = Object.assign({}, { reviews: props.reviews });
+                    this.onChange = props.onChange;
+                }
+                componentDidMount() {
+                }
+                onChange1(data) {
+                    console.log(data);
+
+                    if (this.onChange) this.onChange(data);
+                }
+                render() {
+                    return (
+                        React.createElement("div", { className: 'container' },
+                            React.createElement("div", { className: 'jumbotron' },
+                                React.createElement("h2", {}, this.state.reviews.length),
+                                React.createElement("button", { className: 'btn btn-primary btn-lg', 'data-toggle': 'modal', 'data-target': '#myModal' }, "Add"),
+                                React.createElement(BootstrapModal, { reviews: this.state.reviews, onChange1: this.onChange1.bind(this) }),
+                            ),
+                        )
+                    )
+                }
+            }
+            class CourseComponent extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = Object.assign({}, { reviews: props.reviews, isModalOpen: false });
+                }
+                componentDidMount() {
+                }
+                openModal() {
+                    this.setState({ isModalOpen: true })
+                }
+                closeModal() {
+                    this.setState({ isModalOpen: false })
+                }
+                onChange(data) {
+                    console.log(data);
+                    this.setState({ reviews: this.state.reviews.concat(data) });
+                }
+                render() {
+                    if (this.state.reviews) {
+                        return (
+                            React.createElement("div", {},
+                                React.createElement(RatingComponent, { reviews: this.state.reviews, onChange: this.onChange.bind(this) }),
+                                this.state.reviews.map((r) => {
+                                    return React.createElement('h2', { key: r.name }, r.name)
+                                }),
+                            )
+                        )
+                    }
+                }
+            }
+            const reviews = [{ name: 'hello1' }, { name: 'hello2' }, { name: 'hello3' }]
+            ReactDOM.render(
+                React.createElement(CourseComponent, { reviews: reviews }),
+                document.getElementById("hello")
+            );
+        </script>
+    </body>
+</header>
+
+</html>

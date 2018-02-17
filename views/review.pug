@@ -11,20 +11,23 @@ block content
     }
     
     .grid-item {
-      background-color: wheat;
+      background-color: white;
       border: 1px solid rgba(255, 255, 255, 0.8);
       padding: 10px;
       font-size: 17px;
       border-radius:15px;
     }
     body, html {
+      background: url("/images/orange.jpg") no-repeat center center fixed; 
+      background-size: cover;
+      height: 100%;
       height: 100%;
       margin: 0;
     }
 
     .bg {
       /* The image used */
-      background-image: url("/images/orange.jpg");
+      -background-image: url("/images/orange.jpg");
 
       /* Full height */
       height: 100%; 
@@ -95,6 +98,27 @@ block content
     .selected {
     background: darkgrey;
     }
+    .transitionAll {
+    width: 200px;
+    height: 30px;
+    margin:auto;
+    background: black;
+    border-radius:0.25rem;
+    -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+    transition: width 1s;
+    }
+
+    .transitionAll:hover {
+        width: 400px;
+    }
+    a.hello1:hover {
+    color: white;
+    text-decoration: none;
+    }
+    .hello1:hover {
+    color: white;
+    text-decoration: none;
+    }
   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
   div(class='bg' id='changeBack')
     h2(style='color:cornsilk;text-align:center;') Oregon State University
@@ -102,12 +126,16 @@ block content
     
     br
     br
-    .jumbotron.container(style=' background-color: rgba(192,192,192,0.3);text-align:center;')
+    .jumbotron.container(style=' background-color: rgba(0,0,0,0.3);text-align:center;')
       input(type='hidden',name='courseId',id='courseId', value=courseId)
       h2(style='color:white;text-align:left;') #{courseId}
       h4(style='color:white;text-align:center;') Overall Rating
       br
       input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
+      br
+      br
+      div(class='transitionAll')
+        a.hello1(href='#hello1' style='color:white;padding: .375rem .75rem;') View Reviews
   #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
     .modal-dialog
       .modal-content
@@ -181,7 +209,8 @@ block content
                   input#postBtn.btn.btn-success(type='submit', name='save', value='Post')
   br
   br
-  h2(style='text-align:center;color:cornflowerblue;') Course Reviews
+  #hello1
+    h2(name='hello1' style='text-align:center;color:cornsilk;') Course Reviews
   br
   #hello
     script.
@@ -222,7 +251,7 @@ block content
                                 React.createElement("label", {}, "Term")
                               ),
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.courseTerm)
+                                React.createElement("text", {className:'text-display',style:{color:'orangered'}}, number.courseTerm)
                               ),
                             ),
                             React.createElement("tr", {},
@@ -230,7 +259,7 @@ block content
                                 React.createElement("label", {}, "Positives")
                               ),
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.coursePros)
+                                React.createElement("text", {className:'positives-display'}, number.coursePros)
                               ),
                             ),
                             React.createElement("tr", {},
@@ -238,7 +267,7 @@ block content
                                 React.createElement("label", {}, "Negatives")
                               ),                
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.courseCons)
+                                React.createElement("text", {className:'negatives-display'}, number.courseCons)
                               ),
                             ),
                             React.createElement("tr", {},
@@ -246,7 +275,7 @@ block content
                                 React.createElement("label", {}, "Links")
                               ),     
                               React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.courseLinks)
+                                React.createElement("text", {className:'links-display'}, number.courseLinks)
                               ),
                             ),
                             React.createElement("tr", {},
@@ -294,23 +323,23 @@ block content
         $("#term").change(function(){
           if ( $(this).val() === "Fall" ) { 
             
-            $("#changeBack").attr('style','background-image: url(/images/fall.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+            $("#changeBody").attr('style','background-image: url(/images/fall.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
             $("#backTo").attr('style','color:white;');
               }
               if( $(this).val() == "Winter" ) { 
-          $("#changeBack").attr('style','background-image: url(/images/winter.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBody").attr('style','background-image: url(/images/winter.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
           $("#backTo").attr('style','color:brown;');
               }
               if( $(this).val() == "Spring" ) { 
-          $("#changeBack").attr('style','background-image: url(/images/spring.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBody").attr('style','background-image: url(/images/spring.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
           $("#backTo").attr('style','color:brown;');
               }
               if( $(this).val() == "Summer" ) { 
-          $("#changeBack").attr('style','background-image: url(/images/summer.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBody").attr('style','background-image: url(/images/summer.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
           $("#backTo").attr('style','color:brown;');
               }
               if( $(this).val() == "default" ) { 
-          $("#changeBack").attr('style','background-image: url(/images/orange.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+          $("#changeBody").attr('style','background-image: url(/images/orange.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
           $("#backTo").attr('style','color:brown;');
               }
               

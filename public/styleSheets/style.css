@@ -45,13 +45,30 @@ body {
     color: #FFD700;
 }
 .text-display {
-    color: orange;
+    color: brown;
+    -padding:20px;
+}
+.positives-display {
+    color: green;
+    -padding:20px;
+}
+label{
+    font-weight: 500;
+}
+.negatives-display {
+    color: red;
+    -padding:20px;
+}
+.links-display {
+    color:cornflowerblue;
     -padding:20px;
 }
 .star-display {
     content: "\2605";
-    color: brown;
+    color:navy;
     -padding:10px;
+    font-weight: 1000;
+    font-size: 1.5rem;
 }
 a {
     color: #080808;
@@ -59,6 +76,7 @@ a {
 }
 a:hover {
     color: white;
+    text-decoration: none;
 }
 
 table {
