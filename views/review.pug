@@ -112,11 +112,11 @@ block content
         width: 400px;
     }
     a.hello1:hover {
-    color: white;
+    color: black;
     text-decoration: none;
     }
     .hello1:hover {
-    color: white;
+    color: black;
     text-decoration: none;
     }
   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
@@ -134,8 +134,8 @@ block content
       input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
       br
       br
-      div(class='transitionAll')
-        a.hello1(href='#hello1' style='color:white;padding: .375rem .75rem;') View Reviews
+      div(class='transitionAll1')
+        a.h4.hello1(href='#hello1' style='color:white;padding: .375rem .75rem;') View Reviews
   #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
     .modal-dialog
       .modal-content
@@ -168,10 +168,6 @@ block content
             .form-group
               label Feedback or Suggestions to Improve
               textarea#courseFeedback.form-control(placeholder='Enter here', name='courseFeedback',rows='1',maxlength='500',required)
-            .form-group
-              label Rate on a scale of 0 - 10 : 
-              | 
-              
             .form-group
               label How likely are you to recommend this course to a friend or colleague?
               input(type="hidden" name='courseRating' id='courseRating')
