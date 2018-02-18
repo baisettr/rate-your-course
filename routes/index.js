@@ -4,8 +4,9 @@ var request = require('request');
 
 
 router.get('/', function (req, res, next) {
-    res.render('index.pug');
-    //res.redirect('https://prometheus.eecs.oregonstate.edu/token?asid=8634941057606815&then=http%3A//localhost:3001/callback');
+    //req.session.isvalid = true;
+    //res.render('index.pug');
+    res.redirect('https://prometheus.eecs.oregonstate.edu/token?asid=8634941057606815&then=http%3A//localhost:3001/callback');
 });
 
 router.post('/callback', function (req, res) {
@@ -22,7 +23,8 @@ router.post('/callback', function (req, res) {
         //console.log(result);
         if (result.isvalid) {
             req.session.isvalid = true;
-            res.redirect('./univ/dept');
+            //res.redirect('./univ/dept');
+            res.render('index.pug');
         }
         else { res.redirect('/') }
     })

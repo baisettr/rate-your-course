@@ -36,12 +36,12 @@ router.get('/reviews', function (req, res, next) {
 
 
 router.post('/addReview', function (req, res, next) {
-    console.log(req.body);
+    //console.log(req.body);
     var review = new Review({ courseId: req.body.courseId, courseTerm: req.body.courseTerm, coursePros: req.body.coursePros, courseCons: req.body.courseCons, courseLinks: req.body.courseLinks, courseTips: req.body.courseTips, courseFeedback: req.body.courseFeedback, courseRating: req.body.courseRating, courseOverall: req.body.courseOverall, postedDate: Date.now() });
-    console.log(review);
+    //console.log(review);
     review.save()
         .then(() => {
-            console.log("save");
+            //console.log("save");
             //res.render('course.pug', { deptId: req.body.crsId.match('[a-zA-Z]*')[0] });
             res.send(JSON.stringify(review));
             //res.json({ 'a': 1 });
