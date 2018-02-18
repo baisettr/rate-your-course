@@ -32,7 +32,7 @@ block content
             text-align:center;
             padding:2rem 1rem;
         }
-    div(style='text-align:center;')
+    div(style='text-align:center;padding:30px;')
         h2(style='color:cornsilk;text-align:center;') Oregon State University
         a.h5.backToLink(href="/", style='color: brown;', id='backTo') «Back to Home
     #hello
@@ -81,13 +81,14 @@ block content
                     //const numbers = this.state.courses;
                     let depts = this.state.courses.filter(
                         (dep) => {
-                        return (dep.dept + dep.depC).toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+                        //return (dep.depC).toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+                        return (dep.depC + dep.dept).toLowerCase().match(this.state.search.toLowerCase());
                         }
                     );
                     return (
                         React.createElement("div", { className: 'container' },
                             React.createElement("div", { className: 'jumbotron jumbo1' },
-                                React.createElement("input", { className: 'form-control', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Department' }),
+                                React.createElement("input", { className: 'form-control', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Department',autoFocus:'focus' }),
                                 /*React.createElement("form", { onSubmit: this.addReview.bind(this) },
                                     React.createElement("input", { type: 'text', ref: 'first', required: true, placeholder: 'Enter first' }),
                                     React.createElement("input", { type: 'text', ref: 'second', required: true, placeholder: 'Enter Second' }),

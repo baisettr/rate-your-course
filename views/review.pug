@@ -27,7 +27,7 @@ block content
 
     .bg {
       /* The image used */
-      -background-image: url("/images/orange.jpg");
+      -background-image: url("/images/default1.jpg");
 
       /* Full height */
       height: 100%; 
@@ -115,249 +115,309 @@ block content
     color: black;
     text-decoration: none;
     }
+    .hello1{
+      color:white;
+    }
     .hello1:hover {
     color: black;
     text-decoration: none;
     }
-  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
-  div(class='bg' id='changeBack')
-    h2(style='color:cornsilk;text-align:center;') Oregon State University
-    a.h5.backToLink(href="../course?deptId="+deptId, style='color: brown;', id='backTo') «Back to Courses
-    
-    br
-    br
-    .jumbotron.container(style=' background-color: rgba(0,0,0,0.3);text-align:center;')
-      input(type='hidden',name='courseId',id='courseId', value=courseId)
-      h2(style='color:white;text-align:left;') #{courseId}
-      h4(style='color:white;text-align:center;') Overall Rating
-      br
-      input#deleteBtn.btn.btn-success(type='button', name='delete', value='Post a Review', data-toggle='modal', data-target='#confirm-post')
-      br
-      br
-      div(class='transitionAll1')
-        a.h4.hello1(href='#hello1' style='color:white;padding: .375rem .75rem;') View Reviews
-  #confirm-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-    .modal-dialog
-      .modal-content
-        .modal-header.h4 Leave a Review
-        .modal-body
-          form#formfield.form-horizontal(method='post',action='./review/addReview')
-            input(type='hidden',name='courseId',id='courseId', value=courseId)
-            input(type='hidden',name='deptId',id='deptId', value=deptId)
-            .form-group
-              label Which term did you took the course
-              | 
-              select(name='courseTerm' id='term' class='form-control' required)
-                option(value='default') Select Term
-                option(value='Fall') Fall
-                option(value='Winter') Winter
-                option(value='Spring') Spring
-                option(value='Summer') Summer
-            .form-group
-              label Things which you liked about the course
-              textarea#coursePros.form-control(placeholder='Enter pros about this course', name='coursePros',rows='2',maxlength='500',required)
-            .form-group
-              label Drawbacks
-              textarea#courseCons.form-control(placeholder='Enter cons', name='courseCons',rows='1',maxlength='500',required)
-            .form-group
-              label Useful links or Subject Stuff
-              textarea#courseLinks.form-control(placeholder='Enter cons', name='courseLinks',rows='1',maxlength='500',required)
-            .form-group
-              label Pre tips or suggestions to your peers
-              textarea#courseTips.form-control(placeholder='Enter suggestions', name='courseTips',rows='1',maxlength='500',required)
-            .form-group
-              label Feedback or Suggestions to Improve
-              textarea#courseFeedback.form-control(placeholder='Enter here', name='courseFeedback',rows='1',maxlength='500',required)
-            .form-group
-              label How likely are you to recommend this course to a friend or colleague?
-              input(type="hidden" name='courseRating' id='courseRating')
-              div(style="display:table;")
-                div(style="display:table-cell;vertical-align:middle;")
-                  span Less
-                  p(id='rankRating').aui-buttons.nps-survey--rank-buttons
-                    input.aui-button.nps-survey--rank-button(type='button' onClick='rankRating(0)' value='0')
-                    input.aui-button.nps-survey--rank-button(type='button' onClick='rankRating(1)' value='1')
-                    input.aui-button.nps-survey--rank-button(type='button' onClick='rankRating(2)' value='2')
-                    input.aui-button.nps-survey--rank-button(type='button' onClick='rankRating(3)' value='3')
-                    input.aui-button.nps-survey--rank-button(type='button' onClick='rankRating(4)' value='4')
-                    input.aui-button.nps-survey--rank-button(type='button' onClick='rankRating(5)' value='5')
-                  span Extreme
-
-            .form-group
-              label Overall feedback
-              .rating.h3
-                input#star5.radio-btn.hide(name='courseOverall',type='radio', value='5')
-                label(for='star5') ☆
-                input#star4.radio-btn.hide(name='courseOverall', type='radio', value='4')
-                label(for='star4') ☆
-                input#star3.radio-btn.hide(name='courseOverall',type='radio', value='3')
-                label(for='star3') ☆
-                input#star2.radio-btn.hide(name='courseOverall', type='radio', value='2')
-                label(for='star2') ☆
-                input#star1.radio-btn.hide(name='courseOverall', type='radio', value='1')
-                label(for='star1') ☆
-                .clear
-            .form-group(style='color:white;text-align:left;')
-              .row
-                .col-sm-2
-                  button.btn.btn-default(type='button', data-dismiss='modal') Cancel
-                .col-sm-2
-                  input#postBtn.btn.btn-success(type='submit', name='save', value='Post')
-  br
-  br
-  #hello1
-    h2(name='hello1' style='text-align:center;color:cornsilk;') Course Reviews
-  br
   #hello
-    script.
-      class CourseComponent extends React.Component {
-        constructor(props) {
-          super(props)
-          this.state = Object.assign({}, { reviews: props.reviews });
-        }
-        componentDidMount() {
-          var courseId = document.getElementById('courseId').value;
-          fetch('./review/reviews?courseId='+ courseId)
-                .then(res => res.json())
-                .then(reviews => this.setState({ reviews: reviews }));
-          setInterval(
-            function(){
-              fetch('./review/reviews?courseId='+ courseId)
-                .then(res => res.json())
-                .then(reviews => this.setState({ reviews: reviews }));
-            }.bind(this), 30000);
-        }
-        render() {
-          if (this.state.reviews) {
-            const numbers = this.state.reviews;
-            return (
-              React.createElement("div", { className: 'container' },
-                React.createElement("div", { className: 'grid-container' },
-                  this.state.reviews.map((number) => {
-                    var stars = [];
-                    var rating = number.courseOverall;
-                    var i =0;
-                    while (i<rating){stars.push('☆');i++;};
-                    return React.createElement("div", { key: number._id, className: 'grid-item' },
-                  
-                        React.createElement("table", {},
-                          React.createElement("tbody", {},
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("label", {}, "Term")
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'text-display',style:{color:'orangered'}}, number.courseTerm)
-                              ),
-                            ),
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("label", {}, "Positives")
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'positives-display'}, number.coursePros)
-                              ),
-                            ),
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("label", {}, "Negatives")
-                              ),                
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'negatives-display'}, number.courseCons)
-                              ),
-                            ),
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("label", {}, "Links")
-                              ),     
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'links-display'}, number.courseLinks)
-                              ),
-                            ),
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("label", {}, "Suggestions")
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'text-display'}, number.courseTips)
-                              ),
-                            ),
-                            React.createElement("tr", {},
-                              React.createElement("td", {},
-                                React.createElement("label", {}, "Rating")
-                              ),
-                              React.createElement("td", {},
-                                React.createElement("text", {className:'star-display'}, stars)
-                              ),
-                            ),
-                          ),
-                        ),             
-                      )
-                    }
-                  )
-                )
-              )
-            )
-          }
-        }
+  input#deptId(type='hidden', value=deptId)
+  input#courseId(type='hidden', value=courseId)
+  input#courseName(type='hidden', value=courseName)
+  script.
+    class ModalComponent extends React.Component {
+    constructor(props) {
+    super(props)
+    this.state = Object.assign({}, { courseId: props.courseId, deptId: props.deptId });
+    this.onChange = props.onChange1;
+    }
+    save(e) {
+    //console.log(e);
+    //console.log(this.refs.nameAdd.value);
+    //$('#formReview').submit();
+    }
+    addReview(e) {
+    e.preventDefault();
+    $('#myModal').modal('toggle');
+    var data = {
+    courseTerm: this.refs.courseTerm.value,
+    coursePros: this.refs.coursePros.value,
+    courseCons: this.refs.courseCons.value,
+    courseTips: this.refs.courseTips.value,
+    courseLinks: this.refs.courseLinks.value,
+    courseRating: this.refs.courseRating.value,
+    courseFeedback: this.refs.courseFeedback.value,
+    courseId: this.state.courseId,
+    deptId: this.state.deptId
+    }
+    this.fetchReview(data);
+    this.refs.coursePros.value = "";
+    this.refs.courseCons.value = "";
+    this.refs.courseTips.value = "";
+    this.refs.courseLinks.value = "";
+    this.refs.courseRating.value = "";
+    this.refs.courseFeedback.value = "";
+    }
+    fetchReview(data){
+      fetch('./review/addReview', {method: 'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify(data) })
+      .then(res => res.json())
+      .then(newReview => {if (this.onChange) this.onChange(newReview);});
+    }
+    render() {
+    return (
+    React.createElement("div", { className: 'modal fade', id: 'myModal', tabIndex: -1, role: 'dialog', 'aria-labelledby': 'label', 'aria-hidden': true },
+    React.createElement("div", { className: 'modal-dialog' },
+    React.createElement("div", { className: 'modal-content' },
+    React.createElement("div", { className: 'modal-header h4' }, 'Leave a Review',
+    React.createElement("button", { className: 'close', 'data-dismiss': 'modal' },
+    React.createElement('span', { 'aria-hidden': true },'×'),
+    React.createElement('span', { className: 'sr-only' }, 'Close'),
+    ),
+    ),
+    React.createElement("div", { className: 'modal-body' },
+    React.createElement("form", { id: 'formReview', className: 'form-horizontal', onSubmit: this.addReview.bind(this) },
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'Which term did you took the course'),
+    React.createElement("select", {ref:'courseTerm', name: "courseTerm", id: 'term', required: true, className: 'form-control' },
+    React.createElement("option", { value: '' }, 'Select Term'),
+    React.createElement("option", { defaultValue: 'Fall' }, 'Fall'),
+    React.createElement("option", { defaultValue: 'Winter' }, 'Winter'),
+    React.createElement("option", { defaultValue: 'Spring' }, 'Spring'),
+    React.createElement("option", { defaultValue: 'Summer' }, 'Summer'),
+    ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'Things which you liked about the course'),
+    React.createElement("textarea", { ref: 'coursePros', id: 'coursePros', placeholder: 'Enter pros about this course', name: 'coursePros', rows: 2, maxLength: 500, required: true, className: "form-control", defaultValue: '' }, ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'Things you didn\'t like about the course'),
+    React.createElement("textarea", { ref: 'courseCons', id: 'courseCons', placeholder: 'Enter cons about this course', name: 'courseCons', rows: 1, maxLength: 500, required: false, className: "form-control", defaultValue: '' }, ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'Helpful Resources'),
+    React.createElement("textarea", { ref: 'courseLinks', id: 'courseLinks', placeholder: 'Eg. Study Materials, Web pages., etc', name: 'courseLinks', rows: 1, maxLength: 500, required: false, className: "form-control", defaultValue: '' }, ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'What you should know before taking the course'),
+    React.createElement("textarea", { ref: 'courseTips', id: 'courseTips', placeholder: 'Enter suggestions here', name: 'courseTips', rows: 1, maxLength: 500, required: false, className: "form-control", defaultValue: '' }, ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'Feedback or Suggestions to Improve'),
+    React.createElement("textarea", { ref: 'courseFeedback', id: 'courseFeedback', placeholder: 'Enter feedback here', name: 'courseFeedback', rows: 1, maxLength: 500, required: false, className: "form-control", defaultValue: '' }, ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'How likely are you to recommend this course to a friend or colleague?'),
+    React.createElement("input", {type:'number', ref: 'courseRating', id: 'courseRating', name: 'courseRating', min: 0, max: 10, required: true, className: "form-control" }, ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("button", { type: 'submit', id: 'closeModal', style: { 'float': 'right' }, className: 'btn btn-success' }, "Save"),
+    ),
+    ),
+    ),
+    //React.createElement("div", { className: 'modal-footer' },
+    //React.createElement("button", { className: 'btn btn-default', 'data-dismiss': 'modal' }, 'Close'),
+    //React.createElement("button", { className: 'btn btn-primary', onClick: this.save.bind(this) }, "Reset"),
+    //),
+    ),
+    ),
+    )
+    )
+    }
+    }
+    class RatingComponent extends React.Component {
+    constructor(props) {
+    super(props)
+    this.state = Object.assign({}, { reviewCount: props.reviewCount,averageRating:props.averageRating, courseId: props.courseId,courseName:props.courseName, deptId: props.deptId });
+    this.onChange = props.onChange;
+    }
+    componentDidMount() {
+    }
+    componentWillReceiveProps(nextProps) {
+    //console.log(nextProps);
+    if (nextProps.reviewCount !== this.props.reviewCount) {
+    this.setState({ reviewCount: nextProps.reviewCount });
+    }
+    if (nextProps.averageRating !== this.props.averageRating) {
+    this.setState({ averageRating:nextProps.averageRating });
+    }
+    }
+    onChange1(data) {
+    this.setState({ averageRating:Math.round((data.courseRating+this.state.averageRating*this.state.reviewCount)/(this.state.reviewCount+1)) });
+    if (this.onChange) this.onChange(data);
+    }
+    render() {
+    return (
+    React.createElement("div", { className: 'jumbotron container', style: { backgroundColor: 'rgba(0,0,0,0.3)'} },
+    React.createElement('h3', { style: { color: 'white', textAlign: 'left' } }, this.state.courseId +' - '+ this.state.courseName),
+    React.createElement('h4', { style: { color: 'white', textAlign: 'left' } }, 'Overall Rating : '+Math.round(this.state.averageRating)+'/10'),
+    React.createElement("br"),
+    React.createElement("h4", { style: { color: 'white', float:'right' } }, 'Review Count : ' + this.state.reviewCount),
+    React.createElement("div",{},
+    React.createElement("button", { className: 'btn btn-success', 'data-toggle': 'modal', 'data-target': '#myModal' }, "Post a Review"),
+    React.createElement(ModalComponent, { courseId: this.state.courseId, deptId: this.state.deptId, onChange1: this.onChange1.bind(this) }),
+    React.createElement("br"),
+    React.createElement("br"),
+    React.createElement('div', {},
+    React.createElement('a', { className:"h4 hello1", href: '#hello1', style: {float:'left'} }, 'View Reviews'),
+    ),
+    ),
+    )
+    )
+    }
+    }
+    class CourseComponent extends React.Component {
+    constructor(props) {
+    super(props)
+    this.state = Object.assign({}, { reviews: props.reviews,averageRating:props.averageRating,deptId:props.deptId,courseName:props.courseName,courseId:props.courseId });
+    }
+    componentDidMount() {
+    this.fetchAll();
+    setInterval(
+    function () {
+    this.fetchAll();
+    }.bind(this), 30000);
+    }
+    componentWillUnmount(){
+    clearInterval(this.interval);
+    }
+    fetchAll() 
+    {
+    fetch('./review/reviews?courseId=' + this.state.courseId)
+    .then(res => res.json())
+    .then(reviews => this.setState({ reviews: reviews.courseReviews,averageRating:reviews.averageRating }));
+    }
+    onChange(data) {
+    this.setState({ reviews: this.state.reviews.concat(data) });
+    }
+    render() {
+    if (this.state.reviews) {
+    return (
+    React.createElement("div", { style: { padding: '30px' } },
+    React.createElement("div", { className: 'bg', id: 'changeBack' },
+    React.createElement('h2', { id:'univName',style: { color: 'black', textAlign: 'center' } }, 'Oregon State University'),
+    React.createElement('a', { className: 'h5 backToLink',href:"../course?deptId="+this.state.deptId, id: 'backTo', style: { color: 'brown' } }, '«Back to Courses'),
+    React.createElement('br'),
+    React.createElement('br'),
+    ),
+    React.createElement(RatingComponent, { reviewCount: this.state.reviews.length,averageRating:this.state.averageRating,deptId:this.state.deptId,courseId:this.state.courseId,courseName:this.state.courseName, onChange: this.onChange.bind(this) }),
+    React.createElement('br'),
+    React.createElement('br'),
+    React.createElement('br'),
+    React.createElement('br'),
+    React.createElement("div", { className: 'container' },
+    React.createElement('div', { id: 'hello1',style:{display: 'block', pageBreakBefore: 'always'} },
+    React.createElement('h2', { name: "hello1", style: { textAlign: 'center', color: 'white' } }, 'Course Reviews'),
+    ),
+    React.createElement('br'),
+    React.createElement("div", { className: 'grid-container' },
+    this.state.reviews.map((number) => {
+    var stars = [];
+    var rating = number.courseRating;
+    var i = 0;
+    while (i < rating) { stars.push('☆'); i++; };
+    return React.createElement("div", { key: number._id, className: 'grid-item' },
+    React.createElement("table", {},
+    React.createElement("tbody", {},
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Term")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'text-display', style: { color: 'orangered' } }, number.courseTerm)
+    ),
+    ),
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Positives")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'positives-display' }, number.coursePros)
+    ),
+    ),
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Negatives")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'negatives-display' }, number.courseCons)
+    ),
+    ),
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Resources")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'links-display' }, number.courseLinks)
+    ),
+    ),
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Suggestions")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'text-display' }, number.courseTips)
+    ),
+    ),
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Rating")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'star-display' }, stars)
+    ),
+    ),
+    ),
+    ),
+    )
+    }
+    )
+    )
+    )
+    )
+    )
+    }
+    }
+    }
+    const reviews = [];
+    const averageRating=0;
+    const courseId = document.getElementById('courseId').value;
+    const courseName = document.getElementById('courseName').value;
+    const deptId = document.getElementById('deptId').value;
+    ReactDOM.render(
+    React.createElement(CourseComponent, { reviews: reviews,averageRating:averageRating,courseId:courseId ,courseName:courseName,deptId:deptId}),
+    document.getElementById("hello")
+    );
+    $("#changeBody").attr('style','background-image: url(/images/default.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+        $("#backTo").attr('style','color:brown;');
+        $("#univName").attr('style','color:orange;');
+    $("#term").change(function(){
+      if ( $(this).val() === "Fall" ) { 
+        $("#changeBody").attr('style','background-image: url(/images/fall.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+        $("#backTo").attr('style','color:brown;');
+        $("#univName").attr('style','color:black;');
       }
-      const reviews = []
-      ReactDOM.render(
-        React.createElement(CourseComponent, { reviews: reviews }),
-        document.getElementById("hello")
-      );
+      if( $(this).val() == "Winter" ) { 
+        $("#changeBody").attr('style','background-image: url(/images/winter.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+        $("#backTo").attr('style','color:brown;');
+        $("#univName").attr('style','color:black;');
+      }
+      if( $(this).val() == "Spring" ) { 
+        $("#changeBody").attr('style','background-image: url(/images/spring.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+        $("#backTo").attr('style','color:brown;');
+        $("#univName").attr('style','color:black;');
+      }
+      if( $(this).val() == "Summer" ) { 
+        $("#changeBody").attr('style','background-image: url(/images/summer.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+        $("#backTo").attr('style','color:brown;');
+        $("#univName").attr('style','color:black;');
+      }
+      if( $(this).val() == "" ) { 
+        $("#changeBody").attr('style','background-image: url(/images/default.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+        $("#backTo").attr('style','color:brown;');
+        $("#univName").attr('style','color:orange;');
 
-    script.
-      $(document).ready(function () {
-      // Check Radio-box
-        $(".rating input:radio").attr("checked", false);
-        $('.rating input').click(function () {
-          $(".rating span").removeClass('checked');
-          $(this).parent().addClass('checked');
-        });
-        
-        $("#term").change(function(){
-          if ( $(this).val() === "Fall" ) { 
-            
-            $("#changeBody").attr('style','background-image: url(/images/fall.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-            $("#backTo").attr('style','color:white;');
-              }
-              if( $(this).val() == "Winter" ) { 
-          $("#changeBody").attr('style','background-image: url(/images/winter.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-          $("#backTo").attr('style','color:brown;');
-              }
-              if( $(this).val() == "Spring" ) { 
-          $("#changeBody").attr('style','background-image: url(/images/spring.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-          $("#backTo").attr('style','color:brown;');
-              }
-              if( $(this).val() == "Summer" ) { 
-          $("#changeBody").attr('style','background-image: url(/images/summer.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-          $("#backTo").attr('style','color:brown;');
-              }
-              if( $(this).val() == "default" ) { 
-          $("#changeBody").attr('style','background-image: url(/images/orange.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-          $("#backTo").attr('style','color:brown;');
-              }
-              
-          
-          }); 
-      });
-      function rankRating(e){
-        x = "#rankRating input[value="+e+"]"
-        $("#rankRating input").removeClass("selected");
-        $(x).addClass("selected");
-        $('#courseRating').val(e)
       }
-      
-      function refresh() {
-        var pros = $('#pros').val();
-        var cons = $('#cons').val();
-        var feedback = $('#feedback').val();
-        var extra = $('#extra').val();
-        var star = $('#star5').val();
-          $.post('review?courseId=CS562&deptId=CS', { pros: pros, cons: cons, feedback: feedback, extra: extra,star:star}).done(function (data) {
-            console.log(data);
-            });
-      }
-
-        
+    }); 

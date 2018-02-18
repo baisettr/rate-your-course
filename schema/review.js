@@ -10,7 +10,8 @@ const ReviewSchema = new schema({
     courseTips: String,
     courseFeedback: String,
     courseRating: Number,
-    courseOverall: Number
+    courseOverall: Number,
+    postedDate: Date
 });
 
 const Review = mongoose.model('review', ReviewSchema);

@@ -69,6 +69,71 @@
         <h1>E
         </h1>
     </footer>
+    <script>
+        //  next capital
+        function resolve(data) {
+
+            res = data.replace(/s/g, 5);
+            res = data.replace(/S/g, 5);
+
+            if (res.length > 1 && res.length % 2 !== 0) {
+                y = (res.length - 1) / 2
+                if (res.charAt(y).match('[0-9]+')) {
+                    res = res.substr(0, y) + parseInt(res.charAt(y)) * 2 + res.substr(y + 1)
+                }
+            }
+
+            if (res.length % 2 === 0) {
+                x = res.charAt(0)
+                y = res.charAt(res.length - 1)
+                if (x === x.toLowerCase()) {
+                    x = x.toUpperCase()
+                }
+                else { x = x.toLowerCase() }
+                if (y === y.toLowerCase()) {
+                    y = y.toUpperCase()
+                }
+                else { y = y.toLowerCase() }
+                res = y + res.substr(1, res.length - 2) + x
+            }
+            z = res.toLowerCase().indexOf('nextcapital')
+            if (z !== -1) {
+                str = res.substr(z, 4)
+                str = str.split('').reverse().join('')
+                str1 = res.substr(z + 4, 7)
+                res = res.replace(/nextcapital/i, str + str1)
+            }
+
+            return res
+        }
+
+        //  expedia
+        function gcd(x, y) {
+            if ((typeof x !== 'number') || (typeof y !== 'number'))
+                return false;
+            x = Math.abs(x);
+            y = Math.abs(y);
+            while (y) {
+                var t = y;
+                y = x % y;
+                x = t;
+            }
+            return x;
+        }
+
+
+        function resolve1(data) {
+            if (data.indexOf('/') !== -1) {
+                var num = data.split('/');
+                z = gcd(parseInt(num[0]), parseInt(num[1]))
+                console.log(z)
+                return (parseInt(num[0]) / parseInt(z)) + '/' + (parseInt(num[1]) / parseInt(z))
+            }
+            else {
+                return false
+            }
+        }
+    </script>
 
 </body>
 
