@@ -6,7 +6,7 @@ var request = require('request');
 router.get('/', function (req, res, next) {
     //req.session.isvalid = true;
     //res.render('index.pug');
-    res.redirect('https://prometheus.eecs.oregonstate.edu/token?asid=8634941057606815&then=http%3A//localhost:3001/callback');
+    res.redirect('https://prometheus.eecs.oregonstate.edu/token?asid=8634941057606815&then=http%3A//159.89.154.17:3001/callback');
 });
 
 router.post('/callback', function (req, res) {
