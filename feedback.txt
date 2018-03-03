@@ -1,0 +1,39 @@
+The modal looks good and works well, and checks for required fields. However, it is somewhat long. It might be better to have a dedicated page for it.
+
+When I go to a course page, I have no idea that there is a course reviews section to scroll down to.
+
+When there are no course reviews, there is just a header that says Course Reviews and no indication that there should be anything underneath, kind of looks like it might be broken.
+
+When searching for a course, it might be nice to be able to search by department, but I don't feel strongly about that. Maybe should sort based on whether my search query appears at the beginning of the entry.
+
+Overall, the site is very fast and it's clear what to do.
+
+I guess you know the overall rating doesn't appear yet.
+
+On the course pages, having a desription and other information will improve the look.
+
+In addition to the Term, would like to have the year.
+
+Desired fields for Leave a Review: Professor (name)
+
+Instead of "Useful links and subject stuff", maybe Helpful Resources
+
+Instead of "Pre tips", maybe Advice for Preparing for the Course
+
+Field suggestion: What you should know before taking the course
+
+Indicate somewhere that the post will be completely anonymous
+
+Instead of "Overall feedback", Overall Rating
+
+Instead of "Drawbacks", "Things you didn't like about the course"
+
+On fields labels, be consistent about capitalization
+
+On Course Reviews section, could have hover-over tooltips for fields to see what they are for
+
+On Leave a Review modal, could have same labels as on Course Reviews area, but have the tooltip text visible without hovering over
+
+Most recent course review should appear at top
+
+On course page, on description area, may want to change colors or opacity of description background area so that text can be read easily
