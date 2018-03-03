@@ -19,7 +19,7 @@ html
 					var deptId = courseNumber.match(/[a-zA-Z]+/g);
 					var courseId = courseNumber.match(/[a-zA-Z]+/g);
 					console.log(courseNumber,deptId,courseId);
-					location='http://localhost:3001/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
+					location='http://159.89.154.17:3001/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
 					event.preventDefault();
 				}
 				render() {
