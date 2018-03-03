@@ -4,11 +4,55 @@ html
 		meta(name='viewport',content='width=device-width, initial-scale=1, shrink-to-fit=no')
 		title= "Rate Your Course"
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+		link(rel='stylesheet',href='https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/styleSheets/style.css') 
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
 		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js")
 	body(id='changeBody')
+		#navRyc
+		script.
+			class NavbarComponent extends React.Component {
+				searchCourse(event){
+					let courseNumber = this.refs.courseNumber.value;
+					var deptId = courseNumber.match(/[a-zA-Z]+/g);
+					var courseId = courseNumber.match(/[a-zA-Z]+/g);
+					console.log(courseNumber,deptId,courseId);
+					location='http://localhost:3001/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
+					event.preventDefault();
+				}
+				render() {
+					return (
+						React.createElement("nav",	{ className:"navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top" },
+							React.createElement("button",{type:'button',className:"navbar-toggler navbar-toggler-right",'data-toggle':"collapse", 'data-target':"#navbarTogglerDemo02", 'aria-controls':"navbarTogglerDemo02", 'aria-expanded':"false", 'aria-label':"Toggle navigation"},
+								React.createElement("span",{ className: "navbar-toggler-icon" })
+							),							
+							React.createElement("a",{ href: "https://oregonstate.edu",className:"navbar-brand",style:{color:'orangered'} },"Oregon State University"),
+							React.createElement("div",{className:"collapse navbar-collapse", id:"navbarTogglerDemo02"},	
+								React.createElement("ul",{className:"navbar-nav mr-auto"},	
+									React.createElement("li",{className:"nav-item"},
+										React.createElement("a",{ className:'nav-link',href: "/" },"Rate Your Course"),
+									),
+									React.createElement("li",{className:"nav-item"},
+										React.createElement("a",{ className:'nav-link',href: "#",style:{color:'green'} },""),
+									),
+								),
+								React.createElement("form",{className:"form-inline my-2 my-lg-0",onSubmit:this.searchCourse.bind(this)},
+										React.createElement("input",{ className:'form-control mr-sm-2',type: "text",ref:'courseNumber',pattern:'[A-Z]{2,4}[0-9]{3}H?',defaultValue:'',maxLength:8,placeholder:"Eg: CS563, MIME504 "}),
+										React.createElement("button",{className:"btn btn-outline-success my-2 my-sm-0",type:"submit"},'Go')
+									),
+								React.createElement("div",{className:"nav-item"},
+										React.createElement("a",{ className:'nav-link',href: "mailto:baisettr@oregonstate.edu",style:{color:'white'} },"Contact Us"),
+									),
+							),
+						)
+					)
+				}
+			}
+			ReactDOM.render(
+			React.createElement(NavbarComponent, {}),
+			document.getElementById("navRyc")
+			);
 		block content
 		
