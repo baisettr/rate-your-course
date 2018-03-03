@@ -2,11 +2,33 @@ extends layout
 
 block content
     style.
-        body {
-            -background: url("/images/orange.jpg") no-repeat center center fixed;
+        body,html {
+            background: url("/images/orange.jpg") no-repeat center center fixed;
             background-size: cover;
-            -background-color:#000;
+            background-color:#000;
             height: 100%;
+        }
+        .parallax {
+            /* The image used */
+            background-image: url("/images/summer.jpg");
+
+            /* Set a specific height */
+            -min-height: 500px; 
+            height: 100%; 
+
+            /* Create the parallax scrolling effect */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .caption {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            color: #000;
         }
         .grid-container {
             display: grid;
@@ -20,8 +42,8 @@ block content
             text-decoration: none;
         }
         .grid-item {
-        background-color: rgba(0,0,0,.8);
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        /*background-color: wheat;
+        border: 1px solid rgba(255, 255, 255, 0.8);*/
             padding: 10px;
             font-size: 20px;
             text-align: center;
@@ -32,10 +54,13 @@ block content
             text-align:center;
             padding:2rem 1rem;
         }
-    div(style='text-align:center;margin-top:70px;')
-        h2(style='color:cornsilk;text-align:center;')
+    div.parallax
+    div(style='text-align:center;padding:30px;')
+        h2(style='color:cornsilk;text-align:center;') Oregon State University
         a.h5.backToLink(href="/", style='color: brown;', id='backTo') «Back to Home
+    
     #hello
+    
     script.
         class CourseComponent extends React.Component {
             constructor(props) {
@@ -86,8 +111,9 @@ block content
                         }
                     );
                     return (
+                        
                         React.createElement("div", { className: 'container' },
-                            React.createElement("div", { className: 'jumbotron jumbo1' },
+                            React.createElement("div", { className: 'jumbotron jumbo1 parallax' },
                                 React.createElement("input", { className: 'form-control', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Department',autoFocus:'focus' }),
                                 /*React.createElement("form", { onSubmit: this.addReview.bind(this) },
                                     React.createElement("input", { type: 'text', ref: 'first', required: true, placeholder: 'Enter first' }),
@@ -95,6 +121,10 @@ block content
                                     React.createElement("button", { type: 'submit' }, "Add"),
                                 ),*/
                             ),
+                            
+                            React.createElement("div", { className: ''},
+                            React.createElement("div",{className:'caption'},
+                            React.createElement("h2",{style:{float:'center'}},"Hello OSU"),),),
                             React.createElement("div", { className: 'grid-container' },
                                 depts.map((number) => {
                                     return React.createElement("a", { key: number.depC, className: 'grid-item', href: './dept/course?deptId=' + number.depC }, number.depC + " - " + number.dept)

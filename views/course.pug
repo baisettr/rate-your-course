@@ -3,21 +3,21 @@ extends layout
 block content
     style.
         body { 
-            background: url("/images/orange.jpg") no-repeat center center fixed; 
+            -background: url("/images/orange.jpg") no-repeat center center fixed; 
             background-size: cover;
             height: 100%;
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            -grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
             grid-gap: 50px;
             object-fit: cover;
             padding: 10px;
         }
         .grid-item {
-            //background-color: wheat;
+            background-color: darkgray;
 
-            //border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 10px;
             font-size: 20px;
             text-align: center;
@@ -32,8 +32,8 @@ block content
             text-align:center;
             padding:2rem 1rem;
         }
-    div(style='text-align:center;padding:30px;')
-        h2(style='color:cornsilk;text-align:center;') Oregon State University
+    div(style='text-align:center;margin-top:70px;')
+        h2(style='color:cornsilk;text-align:center;')
         a.h5.backToLink(href="/univ/dept", style='color: brown;', id='backTo') «Back to Departments
     #hello
     input#dept(type='hidden', value=deptId)
