@@ -89,12 +89,17 @@ block content
                     return (
                         React.createElement("div", { className: 'container' },
                             React.createElement("div", { className: 'jumbotron jumbo1' },
-                                React.createElement("input", { className: 'form-control', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Course',autoFocus:'focus' }),
-                                /*React.createElement("form", { onSubmit: this.addCourse.bind(this) },
-                                    React.createElement("input", { type: 'text', ref: 'first', required: true, placeholder: 'Enter first' }),
-                                    React.createElement("input", { type: 'text', ref: 'second', required: true, placeholder: 'Enter Second' }),
-                                    React.createElement("button", { type: 'submit' }, "Add"),
-                                ),*/
+                                React.createElement("div", { className: 'input-group clearBack' },
+                                    React.createElement("input", { className: 'form-control', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Course',autoFocus:'focus' }),
+                                    React.createElement("span", { className: 'input-group-addon'},
+                                            React.createElement("i", { className: 'fa fa-search'},),
+                                        ),
+                                    /*React.createElement("form", { onSubmit: this.addCourse.bind(this) },
+                                        React.createElement("input", { type: 'text', ref: 'first', required: true, placeholder: 'Enter first' }),
+                                        React.createElement("input", { type: 'text', ref: 'second', required: true, placeholder: 'Enter Second' }),
+                                        React.createElement("button", { type: 'submit' }, "Add"),
+                                    ),*/
+                                ),
                             ),
                             React.createElement("div", { className: 'grid-container' },
                                 courses.map((number) => {
