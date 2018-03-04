@@ -8,6 +8,7 @@ html
 		link(rel='stylesheet',href='https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/styleSheets/style.css') 
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.2/umd/popper.min.js')
 		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js")
@@ -15,9 +16,21 @@ html
 		#navRyc
 		script.
 			class NavbarComponent extends React.Component {
+				constructor(props) {
+					super(props);
+					this.state = Object.assign({}, { reviewCount: 0,userCount:0 });
+				}
+				componentDidMount() {
+					this.fetchReviewCount();
+				}
+				fetchReviewCount() {
+					fetch('http://159.89.154.17:3001/univ/dept/course/review/count')
+					.then(res => res.json())
+					.then(data => this.setState({ reviewCount: data.reviewCount,userCount:data.userCount }));
+				}
 				searchCourse(event){
 					event.preventDefault();
-					let courseNumber = this.refs.courseNumber.value;
+					let courseNumber = (this.refs.courseNumber.value).toUpperCase();
 					var deptId = courseNumber.match(/[a-zA-Z]+/g);
 					var courseId = courseNumber.match(/[a-zA-Z]+/g);
 					//console.log(courseNumber,deptId,courseId);
@@ -38,15 +51,18 @@ html
 										React.createElement("a",{ className:'nav-link',href: "/" },"Rate Your Course"),
 									),
 									React.createElement("li",{className:"nav-item"},
-										React.createElement("a",{ className:'nav-link',href: "#",style:{color:'green'} },""),
+										React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Total Reviews : '+this.state.reviewCount),
+									),
+									React.createElement("li",{className:"nav-item"},
+										//React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Registered Users : '+this.state.userCount),
 									),
 								),
 								React.createElement("form",{className:"form-inline my-2 my-lg-0",onSubmit:this.searchCourse.bind(this)},
-										React.createElement("input",{ className:'form-control mr-sm-2',type: "text",ref:'courseNumber',pattern:'[A-Z]{2,4}[0-9]{3}H?',defaultValue:'',maxLength:8,placeholder:"Eg: CS563, MIME504 "}),
-										React.createElement("button",{className:"btn btn-outline-success my-2 my-sm-0",type:"submit"},'Go to course')
+										React.createElement("input",{ className:'form-control mr-sm-2',type: "text",ref:'courseNumber',pattern:'[a-zA-Z]{2,4}[0-9]{3}H?',defaultValue:'',maxLength:8,placeholder:"Ex: CS562, MIME504 "}),
+										React.createElement("button",{className:"btn btn-outline-success my-2 my-sm-0",type:"submit"},'Go To Course')
 									),
 								React.createElement("div",{className:"nav-item"},
-										React.createElement("a",{ className:'nav-link',href: "mailto:baisettr@oregonstate.edu",style:{color:'white'} },"Contact us"),
+										React.createElement("a",{ className:'nav-link',href: "mailto:baisettr@oregonstate.edu",style:{color:'white'} },"Contact Us"),
 									),
 							),
 						)
@@ -58,4 +74,9 @@ html
 			document.getElementById("navRyc")
 			);
 		block content
+		br
+		br
+		br
+	footer(class='footer12')
+		ul(class='copyright')
 		
