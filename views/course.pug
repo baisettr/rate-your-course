@@ -15,13 +15,13 @@ block content
             padding: 10px;
         }
         .grid-item {
-            background-color: darkgray;
+            background-color: rgba(0,0,0,.2);
 
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 10px;
             font-size: 20px;
             text-align: center;
-            color:ivory;
+            color:black;
         }
         .grid-container>a:hover {
             color: darkcyan;
@@ -57,26 +57,27 @@ block content
             }
             addCourse(event) {
                 event.preventDefault();
-                //console.log(this);
-                var data = { crsNr: this.refs.first.value, crsNme: this.refs.second.value };
-                this.setState({
-                courses: this.state.courses.concat(data)
+                var courseNumber = this.refs.courseNumber.value+'-'+this.refs.courseSection.value+'-'+this.refs.courseTerm.value;
+                var courseName = this.refs.courseName.value;
+                var checkDupCourse = true;
+                this.state.courses.forEach((course)=>{
+                    if (course.crsNr === courseNumber){
+                        checkDupCourse = false;
+                    }
                 })
-                this.refs.first.value = '';
-                this.refs.second.value = '';
-                this.postCourse(data);
+                if (checkDupCourse){
+                    var data = { deptId:deptId, crsNr:courseNumber , crsNme: courseName };
+                    this.fetchCourse(data);
+                    this.refs.courseNumber.value = '';
+                    this.refs.courseSection.value = '';
+                    this.refs.courseTerm.value = '';
+                    this.refs.courseName.value = '';
+                }
             }
-            postCourse(data) {
-                const headers = new Headers();
-                headers.append('Content-Type', 'application/json');
-                const options = {
-                method: 'POST',
-                headers,
-                body: JSON.stringify(data)
-            }
-            const req = new Request('http://localhost:3001/univ/dept/course/addCourse', options);
-            const res = fetch(req);
-            const status = res.status;
+            fetchCourse(data){
+                fetch('./course/addCourse', {method: 'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify(data) })
+                .then(res => res.json())
+                .then(check => {if(check.done){this.state.search='';this.fetchAll();}});
             }
             render() {
                 if (this.state.courses) {
@@ -92,20 +93,27 @@ block content
                                 React.createElement("div", { className: 'input-group clearBack' },
                                     React.createElement("input", { className: 'form-control', value: this.state.search, onChange: this.updateSearch.bind(this), placeholder: 'Search by Course',autoFocus:'focus' }),
                                     React.createElement("span", { className: 'input-group-addon'},
-                                            React.createElement("i", { className: 'fa fa-search'},),
-                                        ),
-                                    /*React.createElement("form", { onSubmit: this.addCourse.bind(this) },
-                                        React.createElement("input", { type: 'text', ref: 'first', required: true, placeholder: 'Enter first' }),
-                                        React.createElement("input", { type: 'text', ref: 'second', required: true, placeholder: 'Enter Second' }),
-                                        React.createElement("button", { type: 'submit' }, "Add"),
-                                    ),*/
+                                        React.createElement("i", { className: 'fa fa-search'},),
+                                    ),
                                 ),
                             ),
                             React.createElement("div", { className: 'grid-container' },
                                 courses.map((number) => {
                                     return React.createElement("a", { key: number.crsNr, className: 'grid-item', href: './course/review?courseId=' + deptId+number.crsNr+'&courseName='+number.crsNme+'&deptId='+deptId }, number.crsNr + " - " + number.crsNme)
                                 })
-                            )
+                            ),
+                            React.createElement("br"),
+                            React.createElement("div", { className: 'jumbotron jumbo1' },
+                                React.createElement("h4",{style:{color:'red'}},"Didn't find your course?"),
+                                React.createElement("br"),
+                                React.createElement("form", {className:'form-inline block', onSubmit: this.addCourse.bind(this),style:{margin:'15px'} },
+                                    React.createElement("input", { type: 'text',className:'form-control', ref: 'courseNumber',pattern:'[0-9]{3}',maxLength:3, required: true, placeholder: 'Enter course number  (xxx)' }),
+                                    React.createElement("input", { type: 'text',className:'form-control', ref: 'courseSection',pattern:'[0-9]{3}',maxLength:3, required: true, placeholder: 'Enter section  (xxx)' }),
+                                    React.createElement("input", { type: 'text',className:'form-control', ref: 'courseTerm',pattern:'(F|W|Sp|Su)[0,1]{1}[0-8]{1}',maxLength:4, required: true, placeholder: 'Ex: W18, F17, Sp16, Su15 ' }),
+                                    React.createElement("input", { type: 'text',className:'form-control mr-sm-4', ref: 'courseName',maxLength:350, required: true, placeholder: 'Enter course name' }),
+                                    React.createElement("button", { type: 'submit',className:'form-control btn btn-success', }, "Add a Course"),
+                                ),
+                            ),
                         )
                     )
                 }
