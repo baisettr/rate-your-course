@@ -4,6 +4,7 @@ const schema = mongoose.Schema;
 const ReviewSchema = new schema({
     courseId: String,
     courseTerm: String,
+    courseProf: String,
     coursePros: String,
     courseCons: String,
     courseLinks: String,
