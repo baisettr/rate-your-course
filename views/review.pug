@@ -165,6 +165,7 @@ block content
     $('#myModal').modal('toggle');
     var data = {
     courseTerm: this.refs.courseTerm.value,
+    courseProf: this.refs.courseProf.value,
     coursePros: this.refs.coursePros.value,
     courseCons: this.refs.courseCons.value,
     courseTips: this.refs.courseTips.value,
@@ -175,6 +176,7 @@ block content
     deptId: this.state.deptId
     }
     this.fetchReview(data);
+    this.refs.courseProf.value = "";
     this.refs.coursePros.value = "";
     this.refs.courseCons.value = "";
     this.refs.courseTips.value = "";
@@ -185,7 +187,7 @@ block content
     fetchReview(data){
       fetch('./review/addReview', {method: 'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify(data) })
       .then(res => res.json())
-      .then(newReview => {if (this.onChange) this.onChange(newReview);});
+      .then(newReview => {if (this.onChange) this.onChange(newReview);$('#raffleFormBtn').attr('disabled',false);});
     }
     render() {
     return (
@@ -209,6 +211,10 @@ block content
     React.createElement("option", { defaultValue: 'Spring' }, 'Spring'),
     React.createElement("option", { defaultValue: 'Summer' }, 'Summer'),
     ),
+    ),
+    React.createElement('div', { className: 'form-group' },
+    React.createElement("label", {}, 'The course was taken by'),
+    React.createElement("input", { type:'text', ref: 'courseProf', id: 'courseProf', placeholder: 'Enter professor name', name: 'courseProf', maxLength: 50, className: "form-control", defaultValue: '' }, ),
     ),
     React.createElement('div', { className: 'form-group' },
     React.createElement("label", {}, 'Things which you liked about the course *'),
@@ -270,6 +276,13 @@ block content
     this.setState({ averageRating:Math.round((data.courseRating+this.state.averageRating*this.state.reviewCount)/(this.state.reviewCount+1)) });
     if (this.onChange) this.onChange(data);
     }
+    addRaffle(event){
+      event.preventDefault();
+      var emailId = this.refs.raffleEmailId.value;
+      fetch('./review/addRaffle', {method: 'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify({emailId:emailId}) })
+      .then(res => res.json())
+      .then(check => {if (check.done) {$('#raffleForm').attr('hidden',true)}});
+    }
     render() {
     return (
     React.createElement("div", { className: 'jumbotron container', style: { backgroundColor: 'rgba(0,0,0,0.3)'} },
@@ -284,6 +297,10 @@ block content
     React.createElement("br"),
     React.createElement('div', {},
     React.createElement('a', { className:"h4 hello1", href: '#hello1', style: {float:'left'} }, 'View Reviews'),
+    React.createElement('form', {id:'raffleForm',className:'form-inline',onSubmit:this.addRaffle.bind(this), style: {float:'right'},hidden:false},
+    React.createElement('input', {ref:'raffleEmailId', type:'text',pattern:'[a-zA-Z]+@(oregonstate|engr\.orst)\.edu',placeholder:'xxxx@oregonstate.edu',className:"form-control",required:true,autoFocus:true}),
+    React.createElement('button', {id:'raffleFormBtn', type:'submit',className:"btn btn-warning",'data-toggle':'tooltip', 'data-placement':"bottom", 'title':"Get a chance to win upto 100$ based on total reviews*. Email is registered only once per day.",disabled:true  },'Register to Raffle*'),
+    ),
     ),
     ),
     )
@@ -340,7 +357,7 @@ block content
     var stars = [];
     var rating = number.courseRating;
     var i = 0;
-    while (i < rating) { stars.push('☆'); i++; };
+    while (i < rating) { stars.push('★'); i++; };
     return React.createElement("div", { key: number._id, className: 'grid-item' },
     React.createElement("table", {},
     React.createElement("tbody", {},
@@ -350,6 +367,14 @@ block content
     ),
     React.createElement("td", {},
     React.createElement("text", { className: 'text-display', style: { color: 'orangered' } }, number.courseTerm)
+    ),
+    ),
+    React.createElement("tr", {},
+    React.createElement("td", {},
+    React.createElement("label", {}, "Professor")
+    ),
+    React.createElement("td", {},
+    React.createElement("text", { className: 'professor-display' }, number.courseProf)
     ),
     ),
     React.createElement("tr", {},
@@ -413,7 +438,7 @@ block content
     React.createElement(CourseComponent, { reviews: reviews,averageRating:averageRating,courseId:courseId ,courseName:courseName,deptId:deptId}),
     document.getElementById("hello")
     );
-    $("#changeBody").attr('style','background-image: url(/images/default.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+    $("#changeBody").attr('style','background-image: url(/images/defaultj.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
         $("#backTo").attr('style','color:wheat;');
         $("#univName").attr('style','color:orange;');
     $("#term").change(function(){
@@ -422,25 +447,28 @@ block content
         $("#backTo").attr('style','color:brown;');
         $("#univName").attr('style','color:black;');
       }
-      if( $(this).val() == "Winter" ) { 
+      if( $(this).val() === "Winter" ) { 
         $("#changeBody").attr('style','background-image: url(/images/winter.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
         $("#backTo").attr('style','color:brown;');
         $("#univName").attr('style','color:black;');
       }
-      if( $(this).val() == "Spring" ) { 
+      if( $(this).val() === "Spring" ) { 
         $("#changeBody").attr('style','background-image: url(/images/spring.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
-        $("#backTo").attr('style','color:white;');
+        $("#backTo").attr('style','color:wheat;');
         $("#univName").attr('style','color:black;');
       }
-      if( $(this).val() == "Summer" ) { 
+      if( $(this).val() === "Summer" ) { 
         $("#changeBody").attr('style','background-image: url(/images/summer.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
         $("#backTo").attr('style','color:brown;');
         $("#univName").attr('style','color:black;');
       }
-      if( $(this).val() == "" ) { 
-        $("#changeBody").attr('style','background-image: url(/images/default.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
+      if( $(this).val() === "" ) { 
+        $("#changeBody").attr('style','background-image: url(/images/defaultj.jpg);height: 100%; width: 100%; background-size:cover;margin-left:auto;margin-right:auto;');
         $("#backTo").attr('style','color:wheat;');
         $("#univName").attr('style','color:orange;');
 
       }
-    }); 
+    });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
