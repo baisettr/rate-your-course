@@ -18,7 +18,8 @@ router.get('/count', function (req, res, next) {
         .then((reviews) => {
             Raffle.count({})
                 .then((users) => {
-                    res.json({ reviewCount: reviews, userCount: users });
+                    //  function to hanlde review count logic and random email email
+                    res.json({ reviewCount: reviews, userCount: users, reviewRaffle: 10, reviewWinner: 'Announcing Soon!' });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -78,7 +79,7 @@ router.post('/addRaffle', function (req, res, next) {
             if (!data) {
                 raffle.save()
                     .then(() => {
-                        res.json({ done: true });
+                        res.json({ done: true, message: 'Yay! Successfully Registered.' });
                     })
                     .catch((err) => {
                         console.log(err);
@@ -88,14 +89,14 @@ router.post('/addRaffle', function (req, res, next) {
                 //console.log(Math.floor((Date.now() - data.postedDate) / (1000 * 60 * 60)))
                 raffle.save()
                     .then(() => {
-                        res.json({ done: true });
+                        res.json({ done: true, message: 'Yum! Registering daily, Liked it.' });
                     })
                     .catch((err) => {
                         console.log(err);
                     })
             }
             else {
-                res.json({ done: true });
+                res.json({ done: true, message: 'Phew! You already registered today.' });
             }
         })
         .catch((err) => {
