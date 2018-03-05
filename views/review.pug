@@ -187,7 +187,7 @@ block content
     fetchReview(data){
       fetch('./review/addReview', {method: 'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify(data) })
       .then(res => res.json())
-      .then(newReview => {if (this.onChange) this.onChange(newReview);$('#raffleFormBtn').attr('disabled',false);});
+      .then(newReview => {if (this.onChange) this.onChange(newReview);$('#raffleFormBtn').attr('disabled',false);$('#raffleText').attr('hidden',true);$('#raffleEmailId').attr('hidden',false);});
     }
     render() {
     return (
@@ -281,7 +281,7 @@ block content
       var emailId = this.refs.raffleEmailId.value;
       fetch('./review/addRaffle', {method: 'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify({emailId:emailId}) })
       .then(res => res.json())
-      .then(check => {if (check.done) {$('#raffleForm').attr('hidden',true)}});
+      .then(check => {if (check.done) {$('#raffleForm').attr('hidden',true);$('#raffleMessage').attr('hidden',false);$('#raffleMessage').text(check.message);}});
     }
     render() {
     return (
@@ -297,9 +297,13 @@ block content
     React.createElement("br"),
     React.createElement('div', {},
     React.createElement('a', { className:"h4 hello1", href: '#hello1', style: {float:'left'} }, 'View Reviews'),
-    React.createElement('form', {id:'raffleForm',className:'form-inline',onSubmit:this.addRaffle.bind(this), style: {float:'right'},hidden:false},
-    React.createElement('input', {ref:'raffleEmailId', type:'text',pattern:'[a-zA-Z]+@(oregonstate|engr\.orst)\.edu',placeholder:'xxxx@oregonstate.edu',className:"form-control",required:true,autoFocus:true}),
-    React.createElement('button', {id:'raffleFormBtn', type:'submit',className:"btn btn-warning",'data-toggle':'tooltip', 'data-placement':"bottom", 'title':"Get a chance to win upto 100$ based on total reviews*. Email is registered only once per day.",disabled:true  },'Register to Raffle*'),
+    React.createElement('div', {style: {float:'right'}},
+    React.createElement('h5',{id:'raffleMessage',style:{color:'ivory',marginRight:'5px'},hidden:true},''),
+    React.createElement('form', {id:'raffleForm',className:'form-inline',onSubmit:this.addRaffle.bind(this),hidden:false},
+    React.createElement('h5',{id:'raffleText',style:{color:'ivory',marginRight:'5px'},hidden:false},'Post review to enable'),
+    React.createElement('input', {id:'raffleEmailId',ref:'raffleEmailId', type:'text',pattern:'[a-zA-Z]+@(oregonstate|engr\.orst)\.edu',placeholder:'xxxx@oregonstate.edu',className:"form-control",required:true,autoFocus:true,hidden:true}),
+    React.createElement('button', {id:'raffleFormBtn', type:'submit',className:"btn btn-warning",'data-toggle':'tooltip', 'data-placement':"bottom", 'title':"Get a chance to win upto 100$ based on total reviews*. Email is registered only once per day.",disabled:true  },'Register for Raffle*'),
+    ),
     ),
     ),
     ),
