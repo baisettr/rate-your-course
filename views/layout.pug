@@ -20,7 +20,7 @@ html
 			class NavbarComponent extends React.Component {
 				constructor(props) {
 					super(props);
-					this.state = Object.assign({}, { reviewCount: 0,userCount:0 ,reviewRaffle:0,reviewWinner:'Announcing Soon!'});
+					this.state = Object.assign({}, { reviewCount: 0,userCount:0 ,raffleAmount:0,raffleWinner:'Announcing Soon!'});
 				}
 				componentDidMount() {
 					this.fetchReviewCount();
@@ -28,7 +28,7 @@ html
 				fetchReviewCount() {
 					fetch('http://159.89.154.17:3001/univ/dept/course/review/count')
 					.then(res => res.json())
-					.then(data => this.setState({ reviewCount: data.reviewCount,userCount:data.userCount,reviewRaffle:data.reviewRaffle,reviewWinner:data.reviewWinner }));
+					.then(data => this.setState({ reviewCount: data.reviewCount,userCount:data.userCount,raffleAmount:data.raffleAmount,raffleWinner:data.raffleWinner }));
 				}
 				searchCourse(event){
 					event.preventDefault();
@@ -61,10 +61,10 @@ html
 										React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Total Reviews : '+this.state.reviewCount),
 									),
 									React.createElement("li",{className:"nav-item"},
-										React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Raffle : $'+this.state.reviewRaffle),
+										React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Raffle : $'+this.state.raffleAmount),
 									),
 									React.createElement("li",{className:"nav-item"},
-										React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Winner : '+this.state.reviewWinner),
+										React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Winner : '+this.state.raffleWinner),
 									),
 									React.createElement("li",{className:"nav-item"},
 										//React.createElement("text",{ className:'nav-link',style:{color:'cornsilk'} },'Registered Users : '+this.state.userCount),
