@@ -98,7 +98,7 @@ function checkLastWinnerCount() {
 function addWinner(emailId, reviewCount) {
 
     return new Promise((resolve, reject) => {
-        winner = new Winner({ emailId: emailId, countReviews: reviewCount })
+        winner = new Winner({ emailId: emailId, countReviews: reviewCount, postedDate: Date.now() })
         winner.save()
             .then(() => { resolve(); })
             .catch((err) => { reject(err); })
@@ -206,7 +206,7 @@ router.post('/addReview', function (req, res, next) {
 router.post('/addRaffle', function (req, res, next) {
     //console.log(req.body);
     var onid = req.body.emailId.split('@')[0];
-    var raffle = new Raffle({ emailId: req.body.emailId });
+    var raffle = new Raffle({ emailId: req.body.emailId, postedDate: Date.now() });
     Raffle.findOne({ emailId: { $in: [onid + '@oregonstate.edu', onid + '@engr.orst.edu'] } }, {}, { sort: { postedDate: -1 } })
         .then((data) => {
             //console.log(data);
