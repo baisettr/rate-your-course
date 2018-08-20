@@ -12,8 +12,6 @@ html
 		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js")
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<script>(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-2139507269214492",enable_page_level_ads: true});</script>
 	body(id='changeBody')
 		#navRyc
 		script.
@@ -26,7 +24,7 @@ html
 					this.fetchReviewCount();
 				}
 				fetchReviewCount() {
-					fetch('http://159.89.154.17:3001/univ/dept/course/review/count')
+					fetch('http://167.99.238.63:3001/univ/dept/course/review/count')
 					.then(res => res.json())
 					.then(data => this.setState({ reviewCount: data.reviewCount,userCount:data.userCount,raffleAmount:data.raffleAmount,raffleWinner:data.raffleWinner }));
 				}
@@ -38,7 +36,7 @@ html
 					var courseId = courseNumber.match(/[0-9]+/g);
 					//console.log(courseNumber,deptId,courseId);
 					if (courseNumber){
-						location='http://159.89.154.17:3001/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
+						location='http://167.99.238.63:3001/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
 					}
 				}
 				render() {
