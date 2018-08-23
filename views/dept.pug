@@ -34,7 +34,7 @@ block content
         }
     div(style='text-align:center;margin-top:70px;')
         h2(style='color:cornsilk;text-align:center;')
-        a.h5.backToLink(href="/", style='color: brown;', id='backTo') «Back to Home
+        a.h5.backToLink(href="/ryc", style='color: brown;', id='backTo') «Back to Home
     #hello
     script.
         class CourseComponent extends React.Component {
@@ -72,7 +72,7 @@ block content
                 headers,
                 body: JSON.stringify(data)
             }
-            const req = new Request('http://localhost:3001/univ/dept/addDept', options);
+            const req = new Request('http://localhost:3001/ryc/univ/dept/addDept', options);
             const res = fetch(req);
             const status = res.status;
             }
