@@ -33,7 +33,7 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 //app.use(express.static(__dirname + '/pages'));
 //app.use(express.static(__dirname + '/scripts'));
 
-mongoose.connect(mongoOptions.url);
+mongoose.connect(mongoOptions.url, { 'useNewUrlParser': true });
 mongoose.Promise = global.Promise;
 
 app.use(session({
@@ -48,11 +48,11 @@ app.get('*', function (req, res, next) {
     next();
 });
 
-app.use('/', index);
-app.use('/univ', univ);
-app.use('/univ/dept', dept);
-app.use('/univ/dept/course', course);
-app.use('/univ/dept/course/review', review);
+app.use('/ryc', index);
+app.use('/ryc/univ', univ);
+app.use('/ryc/univ/dept', dept);
+app.use('/ryc/univ/dept/course', course);
+app.use('/ryc/univ/dept/course/review', review);
 
 app.use(function (req, res, next) {
     var err = new Error('Page Not Found');
