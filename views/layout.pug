@@ -24,7 +24,7 @@ html
 					this.fetchReviewCount();
 				}
 				fetchReviewCount() {
-					fetch('https://rkbeavs.me/univ/dept/course/review/count')
+					fetch('http://localhost:3001/ryc/univ/dept/course/review/count')
 					.then(res => res.json())
 					.then(data => this.setState({ reviewCount: data.reviewCount,userCount:data.userCount,raffleAmount:data.raffleAmount,raffleWinner:data.raffleWinner }));
 				}
@@ -36,7 +36,7 @@ html
 					var courseId = courseNumber.match(/[0-9]+/g);
 					//console.log(courseNumber,deptId,courseId);
 					if (courseNumber){
-						location='https://rkbeavs.me/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
+						location='http://localhost:3001/ryc/univ/dept/course/review?courseId='+courseNumber+'&deptId='+deptId[0];
 					}
 				}
 				render() {
